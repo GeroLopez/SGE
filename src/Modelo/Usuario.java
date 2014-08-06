@@ -44,6 +44,7 @@ public class Usuario {
 
     /**
      * Constructor por defecto para crear un objeto Usuario.
+     * @param id El id del usuario.
      * @param cedula La cédula.
      * @param nombre Nombre.
      * @param apellido Apellido.
@@ -52,7 +53,8 @@ public class Usuario {
      * @param seccion Indica a que sección del observatorio pertenece.
      * @param fechaCreado Fecha en la que se creo el usuario.
      */
-    public Usuario(int cedula, String nombre, String apellido, int telefono1, int tipoDeUsuario, int seccion, Date fechaCreado) {
+    public Usuario(int id,int cedula, String nombre, String apellido, int telefono1, int tipoDeUsuario, int seccion, Date fechaCreado) {
+        this.id = id;
         this.cedula = cedula;
         this.telefono1 = telefono1;
         this.tipoDeUsuario = tipoDeUsuario;

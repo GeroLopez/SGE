@@ -22,7 +22,8 @@ public class Turno {
     private String descripcion;
     private boolean estado;
 
-    public Turno(int idEstudiante, int idTipoDeTurno, Date fecha) {
+    public Turno(int id,int idEstudiante, int idTipoDeTurno, Date fecha) {
+        this.id = id;
         this.idEstudiante = idEstudiante;
         this.idTipoDeTurno = idTipoDeTurno;
         this.fecha = fecha;

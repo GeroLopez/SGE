@@ -15,7 +15,8 @@ public class Bitacora {
     private int resaltado;
     private Image imagen;
 
-    public Bitacora(int idTurno, String contenido) {
+    public Bitacora(int id,int idTurno, String contenido) {
+        this.id = id;
         this.idTurno = idTurno;
         this.contenido = contenido;
     }

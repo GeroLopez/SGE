@@ -4,6 +4,7 @@ import java.sql.Date;
 
 /**
  * Es la clase que representa un estudiante.
+ *
  * @author Genaro López
  * @version 6/08/2014
  */
@@ -14,9 +15,11 @@ public class Estudiante extends Usuario {
     private boolean esInvestigacion;
     private float horasDebe;
     private Date ultimaLecturaBitacora;
-   
+
     /**
      * Constructor por defecto de la clase.
+     *
+     * @param id El id del usuario.
      * @param cedula La cédula.
      * @param nombre Nombre.
      * @param apellido Apellido.
@@ -27,10 +30,10 @@ public class Estudiante extends Usuario {
      * @param esMonitoreo Indica si realiza tareas de monitoreo.
      * @param esInvestigacion Indica si realiza tareas de investigación.
      */
-    public Estudiante(int cedula, String nombre, String apellido, int telefono1,
-            int tipoDeUsuario, int seccion, Date fechaCreado,boolean esMonitoreo,
+    public Estudiante(int id, int cedula, String nombre, String apellido, int telefono1,
+            int tipoDeUsuario, int seccion, Date fechaCreado, boolean esMonitoreo,
             boolean esInvestigacion) {
-        super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion, fechaCreado);
+        super(id, cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion, fechaCreado);
     }
 
     /**

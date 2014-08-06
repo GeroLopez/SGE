@@ -15,13 +15,13 @@ import java.sql.Statement;
  */
 public class ConexionBD {
 
-    ResultSet res = null;
+    private ResultSet res = null;
     private Connection con;
-    Statement st = null;
-    String driver;
-    String url;
-    String userDB;
-    String passDB;
+    private Statement st = null;
+    private String driver;
+    private String url;
+    private String userDB;
+    private String passDB;
 
     public ConexionBD() {
         this.con = null;
@@ -29,7 +29,6 @@ public class ConexionBD {
         url = "jdbc:postgresql://127.0.0.1:5432/volcano";
         userDB = "postgres";
         passDB = "admin";
-        System.out.println("resultado = " + conectar());
     }
 
     /**
@@ -41,13 +40,13 @@ public class ConexionBD {
      */
     public final int conectar() {
         try {
-            Class.forName(driver);
+            Class.forName(getDriver());
         } catch (ClassNotFoundException e) {
             System.out.println("No se pudo cargal el driver, " + e.toString());
             return -1;
         }
         try {
-            con = DriverManager.getConnection(url, userDB, passDB);
+            setCon(DriverManager.getConnection(getUrl(), getUserDB(), getPassDB()));
         } catch (SQLException e) {
             System.out.println("No se pudo realizar la conexion, " + e.toString());
             return -2;
@@ -64,7 +63,7 @@ public class ConexionBD {
     public boolean cerrarConexion() {
         boolean resultado = false;
         try {
-            con.close();
+            getCon().close();
             resultado = true;
         } catch (SQLException e) {
             System.out.println("No se pudo cerrar la conexión, " + e.toString());
@@ -72,18 +71,135 @@ public class ConexionBD {
         return resultado;
     }
 
-    public int login(int cedula, String contrasena) {
+    /**
+     * Esta encargado de hacer la confirmación de los datos de inicio a la base
+     * de datos.
+     *
+     * @param sql La sentencia sql a ejecutar.
+     * @return El número que indica que tipo de usuario está tratando de iniciar
+     * si retorna 1 despliega el formulario de administración, si retorna 2
+     * despliega el formulario de registro de entradas y si retorna -1 es porque
+     * los datos de inicio son incorrectos.
+     */
+    public int login(String sql) {
         int resultado = 0;
-        String sql = "select login(" + cedula + ",'" + contrasena + "')";
         try {
-            Statement stament = con.createStatement();
-            res = stament.executeQuery(sql);
-            while (res.next()) {
-                resultado = Integer.parseInt(res.getString(1).toString());
-            }           
+            Statement stament = getCon().createStatement();
+            setRes(stament.executeQuery(sql));
+            while (getRes().next()) {
+                resultado = Integer.parseInt(getRes().getString(1).toString());
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return resultado;
+    }
+
+    public void consultar(String sql) {
+        setRes(null);
+        try {
+            Statement stament = getCon().createStatement();
+            setRes(stament.executeQuery(sql));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * @return the res
+     */
+    public ResultSet getRes() {
+        return res;
+    }
+
+    /**
+     * @param res the res to set
+     */
+    public void setRes(ResultSet res) {
+        this.res = res;
+    }
+
+    /**
+     * @return the con
+     */
+    public Connection getCon() {
+        return con;
+    }
+
+    /**
+     * @param con the con to set
+     */
+    public void setCon(Connection con) {
+        this.con = con;
+    }
+
+    /**
+     * @return the st
+     */
+    public Statement getSt() {
+        return st;
+    }
+
+    /**
+     * @param st the st to set
+     */
+    public void setSt(Statement st) {
+        this.st = st;
+    }
+
+    /**
+     * @return the driver
+     */
+    public String getDriver() {
+        return driver;
+    }
+
+    /**
+     * @param driver the driver to set
+     */
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
+    /**
+     * @return the url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url the url to set
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
+     * @return the userDB
+     */
+    public String getUserDB() {
+        return userDB;
+    }
+
+    /**
+     * @param userDB the userDB to set
+     */
+    public void setUserDB(String userDB) {
+        this.userDB = userDB;
+    }
+
+    /**
+     * @return the passDB
+     */
+    public String getPassDB() {
+        return passDB;
+    }
+
+    /**
+     * @param passDB the passDB to set
+     */
+    public void setPassDB(String passDB) {
+        this.passDB = passDB;
     }
 }

@@ -49,6 +49,8 @@ public class Login extends javax.swing.JFrame {
 
         jPanelLogin.setBackground(new java.awt.Color(255, 255, 255));
 
+        usuario.setToolTipText("Número de cédula");
+
         jButtonEntrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButtonEntrar.setForeground(new java.awt.Color(166, 187, 63));
         jButtonEntrar.setText("Entrar");
@@ -155,22 +157,42 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarActionPerformed
-        DAO_Login login = new DAO_Login(Integer.parseInt(usuario.getText()), contraseña.getText());
-        int tipo = login.login();
-        if (tipo == 2) {
-            RegistroEntradasInvestigacion entradas = new RegistroEntradasInvestigacion();
-            entradas.setVisible(true);
-            login.conexion.cerrarConexion();
-            this.dispose();
-        } else if (tipo == 1) {
-            
-        } else {
-            etiquetaError.setVisible(true);
-            usuario.setText("");
-            contraseña.setText("");
-        }
-        login.conexion.cerrarConexion();
+        entrar();
     }//GEN-LAST:event_jButtonEntrarActionPerformed
+
+    /**
+     * Verifica que los datos para el inicio sean validos, y realiza la petición
+     * para el inicio de sesión.
+     */
+    public void entrar() {
+        try {
+            int cedula = Integer.parseInt(usuario.getText());
+            String password = contraseña.getText();
+            DAO_Login login = new DAO_Login(cedula, password);
+            login.conexion.conectar();
+            int tipoUsuario = login.login();
+            login.conexion.cerrarConexion();
+            if (tipoUsuario == 2) {
+                RegistroEntradasInvestigacion entradas = new RegistroEntradasInvestigacion();
+                entradas.setVisible(true);
+                this.dispose();
+            } else if (tipoUsuario == 1) {
+                Administracion admin = new Administracion();
+                admin.setVisible(true);
+                this.dispose();
+            } else {
+                limpiarCampos();
+            }
+        } catch (NumberFormatException e) {
+            limpiarCampos();
+        }
+    }
+
+    public void limpiarCampos() {
+        etiquetaError.setVisible(true);
+        usuario.setText("");
+        contraseña.setText("");
+    }
 
     /**
      * @param args the command line arguments

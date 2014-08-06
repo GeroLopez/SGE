@@ -11,7 +11,8 @@ public class Noticias {
     private int idTurno;
     private String contenido;
     
-    public Noticias(int idTurno, String contenido) {
+    public Noticias(int id,int idTurno, String contenido) {
+        this.id = id;
         this.idTurno = idTurno;
         this.contenido = contenido;
     }

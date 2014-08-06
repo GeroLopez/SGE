@@ -14,7 +14,8 @@ public class Errores {
     private Date fechaSolucion;
     private String error;
 
-    public Errores(int idturno, String error) {
+    public Errores(int id,int idturno, String error) {
+        this.id = id;
         this.idturno = idturno;
         this.error = error;
     }

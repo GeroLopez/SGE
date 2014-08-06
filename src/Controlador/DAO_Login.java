@@ -5,6 +5,7 @@ import Modelo.Login;
 
 /**
  * Clase encargada de mediar entre la GUI y el modelo para realizar el login
+ *
  * @author Genaro López
  * @version 5/08/2014
  */
@@ -14,6 +15,7 @@ public class DAO_Login extends Login {
 
     /**
      * Constructor por defecto.
+     *
      * @param usuario es la cedula del usuario.
      * @param contraseña la contraseña.
      */
@@ -24,13 +26,15 @@ public class DAO_Login extends Login {
 
     /**
      * Realiza la petición a la base de datos
+     *
      * @return El número que indica que tipo de usuario está tratando de iniciar
-     * si retorna 1 despliega el formulario de administración,
-     * si retorna 2 despliega el formulario de registro de entradas y
-     * si retorna -1 es porque los datos de inicio son incorrectos.
+     * si retorna 1 despliega el formulario de administración, si retorna 2
+     * despliega el formulario de registro de entradas y si retorna -1 es porque
+     * los datos de inicio son incorrectos.
      */
     public int login() {
-        return conexion.login(this.getUsuario(), this.getContraseña());     
+        String sql = "select login(" + this.getUsuario() + ",'" + this.getContraseña() + "')";
+        return conexion.login(sql);
     }
 
 }
