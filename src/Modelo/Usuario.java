@@ -1,6 +1,6 @@
 package Modelo;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Es la clase que representa un usuario.
@@ -9,6 +9,7 @@ import java.sql.Date;
  * @version 6/08/2014
  */
 public class Usuario {
+
     // id del usuario en la base de datos.
     private int id;
     // La cédula del usuario.
@@ -36,15 +37,15 @@ public class Usuario {
     // Representa el estado del usuario en el observatorio.
     private boolean activado;
     // Fecha en la que se creo el usuario.
-    private Date fechaCreado;
+    private String fechaCreado;
     // Fecha de la última actualización del usuario.
-    private Date fechaActualizado;
+    private String fechaActualizado;
     // Fecha de salida del usuario del observatorio.
-    private Date fechaSalida;
+    private String fechaSalida;
 
     /**
      * Constructor por defecto para crear un objeto Usuario.
-     * @param id El id del usuario.
+     *
      * @param cedula La cédula.
      * @param nombre Nombre.
      * @param apellido Apellido.
@@ -52,9 +53,11 @@ public class Usuario {
      * @param tipoDeUsuario Representa el tipo de usuario.
      * @param seccion Indica a que sección del observatorio pertenece.
      * @param fechaCreado Fecha en la que se creo el usuario.
+     * @param email e-mail del usuario.
+     * @param password contraseña.
      */
-    public Usuario(int id,int cedula, String nombre, String apellido, int telefono1, int tipoDeUsuario, int seccion, Date fechaCreado) {
-        this.id = id;
+    public Usuario(int cedula, String nombre, String apellido, int telefono1,
+            int tipoDeUsuario, int seccion, String fechaCreado, String email, String password) {
         this.cedula = cedula;
         this.telefono1 = telefono1;
         this.tipoDeUsuario = tipoDeUsuario;
@@ -62,6 +65,10 @@ public class Usuario {
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaCreado = fechaCreado;
+        this.fechaActualizado=this.fechaCreado;
+        this.activado=true;
+        this.email = email;
+        this.password = password;
     }
 
     /**
@@ -249,42 +256,42 @@ public class Usuario {
     /**
      * @return the fechaCreado
      */
-    public Date getFechaCreado() {
+    public String getFechaCreado() {
         return fechaCreado;
     }
 
     /**
      * @param fechaCreado the fechaCreado to set
      */
-    public void setFechaCreado(Date fechaCreado) {
+    public void setFechaCreado(String fechaCreado) {
         this.fechaCreado = fechaCreado;
     }
 
     /**
      * @return the fechaActualizado
      */
-    public Date getFechaActualizado() {
+    public String getFechaActualizado() {
         return fechaActualizado;
     }
 
     /**
      * @param fechaActualizado the fechaActualizado to set
      */
-    public void setFechaActualizado(Date fechaActualizado) {
+    public void setFechaActualizado(String fechaActualizado) {
         this.fechaActualizado = fechaActualizado;
     }
 
     /**
      * @return the fechaSalida
      */
-    public Date getFechaSalida() {
+    public String getFechaSalida() {
         return fechaSalida;
     }
 
     /**
      * @param fechaSalida the fechaSalida to set
      */
-    public void setFechaSalida(Date fechaSalida) {
+    public void setFechaSalida(String fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 

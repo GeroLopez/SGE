@@ -13,6 +13,18 @@ public class Seccion {
     private String descripcion;
 
     /**
+     * Constructor con 2 parámetros.
+     *
+     * @param id id de la sección.
+     * @param nombre Nombre de la sección.
+     */
+    public Seccion(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    /**
+     * Constructor con 3 parámetros.
      *
      * @param id id de la sección.
      * @param nombre Nombre de la sección.

@@ -1,6 +1,7 @@
 package Modelo;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * Es la clase que representa un estudiante.
@@ -19,7 +20,6 @@ public class Estudiante extends Usuario {
     /**
      * Constructor por defecto de la clase.
      *
-     * @param id El id del usuario.
      * @param cedula La cédula.
      * @param nombre Nombre.
      * @param apellido Apellido.
@@ -27,13 +27,15 @@ public class Estudiante extends Usuario {
      * @param tipoDeUsuario Representa el tipo de usuario.
      * @param seccion Indica a que sección del observatorio pertenece.
      * @param fechaCreado Fecha en la que se creo el usuario.
+     * @param email
+     * @param password
      * @param esMonitoreo Indica si realiza tareas de monitoreo.
      * @param esInvestigacion Indica si realiza tareas de investigación.
      */
-    public Estudiante(int id, int cedula, String nombre, String apellido, int telefono1,
-            int tipoDeUsuario, int seccion, Date fechaCreado, boolean esMonitoreo,
+    public Estudiante(int cedula, String nombre, String apellido, int telefono1,
+            int tipoDeUsuario, int seccion, String fechaCreado, String email, String password, boolean esMonitoreo,
             boolean esInvestigacion) {
-        super(id, cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion, fechaCreado);
+        super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion, fechaCreado,email,password);
     }
 
     /**

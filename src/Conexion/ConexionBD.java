@@ -84,25 +84,50 @@ public class ConexionBD {
     public int login(String sql) {
         int resultado = 0;
         try {
-            Statement stament = getCon().createStatement();
-            setRes(stament.executeQuery(sql));
+            st = getCon().createStatement();
+            setRes(st.executeQuery(sql));
             while (getRes().next()) {
                 resultado = Integer.parseInt(getRes().getString(1).toString());
             }
+            st.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return resultado;
     }
 
+    /**
+     * Permite realizar consultas a la base de datos.
+     *
+     * @param sql Sentencia sql a ejecutar.
+     */
     public void consultar(String sql) {
         setRes(null);
         try {
-            Statement stament = getCon().createStatement();
-            setRes(stament.executeQuery(sql));
+            st = getCon().createStatement();
+            setRes(st.executeQuery(sql));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     *
+     * @param sql
+     * @return en caso de ocurrir una excepción a la hora de la inserción la
+     * retorna, de lo contrario retorna un null;
+     */
+    public boolean insertar(String sql) {
+        boolean respuesta=false;
+        try {
+            st = getCon().createStatement();
+            st.execute(sql);
+            st.close();
+            respuesta= true;
+        } catch (SQLException e) {
+            System.out.println("esta es la bd "+e.toString());         
+        }
+        return respuesta;
     }
 
     /**

@@ -11,7 +11,7 @@ import Modelo.Login;
  */
 public class DAO_Login extends Login {
 
-    public Conexion.ConexionBD conexion;
+    public ConexionBD conexion;
 
     /**
      * Constructor por defecto.
