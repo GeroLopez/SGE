@@ -69,6 +69,23 @@ public class Usuario {
         this.password = password;
     }
 
+    public Usuario(int id, int cedula, String nombre, String apellido, int telefono1, 
+            int telefono2, String direccion, String email, String nombreDeUsuario, 
+            boolean activado, int tipoDeUsuario, int seccion, String fechaCreado) {
+        this.id = id;
+        this.cedula = cedula;
+        this.telefono1 = telefono1;
+        this.telefono2 = telefono2;
+        this.tipoDeUsuario = tipoDeUsuario;
+        this.seccion = seccion;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.nombreDeUsuario = nombreDeUsuario;
+        this.email = email;
+        this.activado = activado;
+        this.fechaCreado = fechaCreado;
+    }
     /**
      * @return the id
      */

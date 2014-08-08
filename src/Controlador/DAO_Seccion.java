@@ -24,6 +24,10 @@ public class DAO_Seccion extends Seccion {
         conexion = new Conexion.ConexionBD();
     }
 
+    /**
+     * Consulta la base de datos para obtener una lista con las secciones.
+     * @return Una lista con las secciones en la base de datos.
+     */
     public LinkedList<Seccion> consultarSecciones() {
         LinkedList<Seccion> secciones = new LinkedList<Seccion>();
         String sql = "SELECT id, nombre FROM sections order by id";

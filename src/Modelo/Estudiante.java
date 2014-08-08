@@ -2,7 +2,6 @@ package Modelo;
 
 import java.util.Date;
 
-
 /**
  * Es la clase que representa un estudiante.
  *
@@ -32,7 +31,16 @@ public class Estudiante extends Usuario {
      */
     public Estudiante(int cedula, String nombre, String apellido, int telefono1,
             int tipoDeUsuario, int seccion, String fechaCreado, String email, String password) {
-        super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion, fechaCreado,email,password);
+        super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion, fechaCreado, email, password);
+    }
+
+    public Estudiante(int id, int cedula, String nombre, String apellido, int telefono1,
+            int telefono2, String direccion, String email, String nombreDeUsuario,
+            boolean activado, int tipoDeUsuario, int seccion, String fechaCreado, boolean monitoreo, boolean investigacion) {
+
+        super(id, cedula, nombre, apellido, telefono1, telefono2, direccion, email, nombreDeUsuario, activado, tipoDeUsuario, seccion, fechaCreado);
+        this.esMonitoreo = monitoreo;
+        this.esInvestigacion = investigacion;
     }
 
     /**
