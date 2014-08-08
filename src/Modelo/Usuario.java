@@ -1,7 +1,5 @@
 package Modelo;
 
-import java.util.Date;
-
 /**
  * Es la clase que representa un usuario.
  *

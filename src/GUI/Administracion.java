@@ -12,6 +12,7 @@ public class Administracion extends javax.swing.JFrame {
     public Administracion() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/recursos/icono2.png")).getImage());
         this.setTitle("Sistema de gestión de entradas de investigación SGE");
         this.getContentPane().setBackground(java.awt.Color.white);
@@ -26,7 +27,6 @@ public class Administracion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelCrearEstudiante1 = new GUI.PanelCrearEstudiante();
         barraMenu = new javax.swing.JMenuBar();
         archivo = new javax.swing.JMenu();
         configuracion = new javax.swing.JMenuItem();
@@ -59,6 +59,11 @@ public class Administracion extends javax.swing.JFrame {
         gestionarEstudiante.setText("Gestionar Estudiante");
 
         agregarEstudiante.setText("Agregar");
+        agregarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarEstudianteActionPerformed(evt);
+            }
+        });
         gestionarEstudiante.add(agregarEstudiante);
 
         consultarEstudiante.setText("Consultar");
@@ -83,15 +88,11 @@ public class Administracion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(panelCrearEstudiante1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelCrearEstudiante1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGap(0, 419, Short.MAX_VALUE)
         );
 
         pack();
@@ -104,6 +105,13 @@ public class Administracion extends javax.swing.JFrame {
     private void actualizarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarEstudianteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_actualizarEstudianteActionPerformed
+
+    private void agregarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarEstudianteActionPerformed
+      PanelCrearEstudiante crearEstudiante = new PanelCrearEstudiante();
+      crearEstudiante.setBounds(0, 0, 400, 430);
+      crearEstudiante.setVisible(true);
+      this.getContentPane().add(crearEstudiante);
+    }//GEN-LAST:event_agregarEstudianteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,7 +157,6 @@ public class Administracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem consultarEstudiante;
     private javax.swing.JMenuItem desactivarEstudiante;
     private javax.swing.JMenu gestionarEstudiante;
-    private GUI.PanelCrearEstudiante panelCrearEstudiante1;
     private javax.swing.JMenuItem salir;
     // End of variables declaration//GEN-END:variables
 }

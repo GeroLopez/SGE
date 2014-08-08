@@ -112,20 +112,21 @@ public class ConexionBD {
     }
 
     /**
-     *
+     * Realiza inserciones a la base de datos a partir del sql proporcionado.
      * @param sql
-     * @return en caso de ocurrir una excepción a la hora de la inserción la
-     * retorna, de lo contrario retorna un null;
+     * @return una cadena que indica el estado de la inserción, en caso exitoso
+     * retorna la cadena "exito", en caso contrario retorna un mensaje con la 
+     * causa del error.
      */
-    public boolean insertar(String sql) {
-        boolean respuesta=false;
+    public String insertar(String sql) {
+        String respuesta="exito";
         try {
             st = getCon().createStatement();
             st.execute(sql);
             st.close();
-            respuesta= true;
         } catch (SQLException e) {
-            System.out.println("esta es la bd "+e.toString());         
+            System.out.println("esta es la bd "+e.toString());  
+            respuesta=e.toString().split("\n")[1].substring(9);
         }
         return respuesta;
     }

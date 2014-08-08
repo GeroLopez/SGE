@@ -27,14 +27,11 @@ public class Estudiante extends Usuario {
      * @param tipoDeUsuario Representa el tipo de usuario.
      * @param seccion Indica a que sección del observatorio pertenece.
      * @param fechaCreado Fecha en la que se creo el usuario.
-     * @param email
-     * @param password
-     * @param esMonitoreo Indica si realiza tareas de monitoreo.
-     * @param esInvestigacion Indica si realiza tareas de investigación.
+     * @param email El email del estudiante.
+     * @param password La contraseña del estudiante.
      */
     public Estudiante(int cedula, String nombre, String apellido, int telefono1,
-            int tipoDeUsuario, int seccion, String fechaCreado, String email, String password, boolean esMonitoreo,
-            boolean esInvestigacion) {
+            int tipoDeUsuario, int seccion, String fechaCreado, String email, String password) {
         super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion, fechaCreado,email,password);
     }
 

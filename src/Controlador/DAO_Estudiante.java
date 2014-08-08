@@ -4,6 +4,7 @@ import Conexion.ConexionBD;
 import Modelo.Estudiante;
 import java.sql.Date;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,10 +17,9 @@ public class DAO_Estudiante extends Estudiante {
 
     public DAO_Estudiante(int cedula, String nombre, String apellido,
             int telefono1, int tipoDeUsuario, int seccion, String fechaCreado,
-            String email, String password,
-            boolean esMonitoreo, boolean esInvestigacion) {
+            String email, String password) {
         super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion,
-                fechaCreado, email, password, esMonitoreo, esInvestigacion);
+                fechaCreado, email, password);
         conexion = new ConexionBD();
     }
 
@@ -28,9 +28,9 @@ public class DAO_Estudiante extends Estudiante {
      *
      * @return
      */
-    public boolean AgregarEstudiante() {
-        boolean resultado = false;
-//        try {
+    public String AgregarEstudiante() {
+        String resultado = "";
+        try {
             String sql = "SELECT insertar_usuario_estudiante('" + this.getEmail() + "',"
                     + "'" + this.getPassword() + "',true,'" + this.getFechaCreado() + "','"
                     + this.getFechaCreado() + "','" + this.getNombre() + "','"
@@ -39,10 +39,10 @@ public class DAO_Estudiante extends Estudiante {
                     + this.getCedula() + ","
                     + this.isEsMonitoreo() + "," + this.isEsInvestigacion() + ")";
             resultado = conexion.insertar(sql);
-//        } catch (Exception e) {
-//            
-//            System.out.println("el error esta aca " +e.);
-//        }
+        } catch (Exception e) {
+            System.out.println("el error esta aca " + e.toString());
+
+        }
         return resultado;
     }
 }

@@ -5,7 +5,6 @@ import Controlador.DAO_Seccion;
 import Modelo.Seccion;
 import java.awt.Color;
 import java.awt.HeadlessException;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -47,6 +46,19 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Limpia los jTextField.
+     */
+    public void limpiar() {
+        jTextFieldNom.setText("");
+        jTextFieldApe.setText("");
+        jTextFieldCed.setText("");
+        jTextFieldEmail.setText("");
+        jTextFieldCon.setText("");
+        jTextFieldTel1.setText("");
+        jTextFieldTel2.setText("");
+    }
+
     public void agregarEstudiante() {
         try {
             String nombre;
@@ -62,12 +74,16 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
             boolean monitoreo = jRadioButtonMon.isSelected();
             if (!jTextFieldNom.getText().equals("")) {
                 nombre = jTextFieldNom.getText();
+                nom.setForeground(new Color(166, 187, 63));
                 if (!jTextFieldApe.getText().equals("")) {
                     apellido = jTextFieldApe.getText();
+                    ape.setForeground(new Color(166, 187, 63));
                     if (!jTextFieldCon.getText().equals("")) {
                         contraseña = jTextFieldCon.getText();
+                        con.setForeground(new Color(166, 187, 63));
                         if (!jTextFieldEmail.getText().equals("")) {
                             email = jTextFieldEmail.getText();
+                            ema.setForeground(new Color(166, 187, 63));
                             if (!monitoreo && !investigacion) {
                                 JOptionPane.showMessageDialog(this,
                                         "Seleccione al menos una de las dos opciones, "
@@ -76,6 +92,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                 if (!jTextFieldTel1.getText().equals("")) {
                                     try {
                                         telefono1 = Integer.parseInt(jTextFieldTel1.getText());
+                                        tel1.setForeground(new Color(166, 187, 63));
                                     } catch (Exception e) {
                                         jTextFieldTel1.setText("");
                                         tel1.setForeground(Color.red);
@@ -84,6 +101,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                 if (!jTextFieldTel2.getText().equals("")) {
                                     try {
                                         telefono2 = Integer.parseInt(jTextFieldTel2.getText());
+                                        tel2.setForeground(new Color(166, 187, 63));
                                     } catch (Exception e) {
                                         jTextFieldTel2.setText("");
                                         tel2.setForeground(Color.red);
@@ -91,11 +109,10 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                 }
                                 try {
                                     cedula = Integer.parseInt(jTextFieldCed.getText());
-                                    java.util.Date date = new java.util.Date();/////////////////////////////////////////////////////77
-                                    System.out.println(new Timestamp(date.getTime()).toString());//////////////////////////////////////////////////7
+                                    ced.setForeground(new Color(166, 187, 63));
                                     DAO_Estudiante estudiante;
                                     estudiante = new DAO_Estudiante(cedula, nombre, apellido,
-                                            telefono1, 2, seccion, new Timestamp(date.getTime()).toString(), email, contraseña, monitoreo, investigacion);
+                                            telefono1, 2, seccion, new Timestamp(new java.util.Date().getTime()).toString(), email, contraseña);
                                     if (telefono2 != -1) {
                                         estudiante.setTelefono2(telefono2);
                                     } else {
@@ -108,8 +125,16 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                     estudiante.setEsInvestigacion(investigacion);
                                     //aca va el llamado al método del DAO
                                     estudiante.conexion.conectar();
-                                    estudiante.AgregarEstudiante();
+                                    String resultado = estudiante.AgregarEstudiante();
                                     estudiante.conexion.cerrarConexion();
+                                    if (resultado.equals("exito")) {
+                                        limpiar();
+                                        JOptionPane.showMessageDialog(this,
+                                                "Estudiante agregado con éxito", "Éxito en la inserción", JOptionPane.INFORMATION_MESSAGE);
+                                    }else{
+                                        JOptionPane.showMessageDialog(this,
+                                                resultado.concat("\n por favor verifique."), "Error", JOptionPane.ERROR_MESSAGE);
+                                    }
                                 } catch (NumberFormatException e) {
                                     jTextFieldCed.setText("");
                                     ced.setForeground(Color.red);
@@ -159,11 +184,11 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         jTextFieldCon = new javax.swing.JTextField();
         jRadioButtonMon = new javax.swing.JRadioButton();
         jRadioButtonInv = new javax.swing.JRadioButton();
-        panelBanner1 = new GUI.PanelBanner();
         confirmar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
         ema = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -214,17 +239,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         jRadioButtonInv.setForeground(new java.awt.Color(166, 187, 63));
         jRadioButtonInv.setText("Investigación");
 
-        javax.swing.GroupLayout panelBanner1Layout = new javax.swing.GroupLayout(panelBanner1);
-        panelBanner1.setLayout(panelBanner1Layout);
-        panelBanner1Layout.setHorizontalGroup(
-            panelBanner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        panelBanner1Layout.setVerticalGroup(
-            panelBanner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         confirmar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         confirmar.setForeground(new java.awt.Color(166, 187, 63));
         confirmar.setText("Confirmar");
@@ -242,13 +256,20 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         ema.setForeground(new java.awt.Color(166, 187, 63));
         ema.setText("e-mail");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(166, 187, 63));
+        jLabel1.setText("Agregar Estudiante");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBanner1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+                .addContainerGap(48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(confirmar)
@@ -277,18 +298,19 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                             .addComponent(jTextFieldTel1)
                             .addComponent(jTextFieldTel2)
                             .addComponent(jTextFieldCon)
-                            .addComponent(jComboBoxSec, 0, 153, Short.MAX_VALUE)
+                            .addComponent(jComboBoxSec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
                                 .addComponent(jRadioButtonMon))
-                            .addComponent(jTextFieldEmail))))
-                .addGap(47, 47, 47))
+                            .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(panelBanner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nom)
                     .addComponent(jTextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -320,7 +342,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(con)
                     .addComponent(jTextFieldCon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButtonMon)
                     .addComponent(jRadioButtonInv))
@@ -328,7 +350,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmar)
                     .addComponent(cancelar))
-                .addContainerGap())
+                .addGap(40, 40, 40))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -353,6 +375,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
     private javax.swing.JButton confirmar;
     private javax.swing.JLabel ema;
     private javax.swing.JComboBox jComboBoxSec;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton jRadioButtonInv;
     private javax.swing.JRadioButton jRadioButtonMon;
     private javax.swing.JTextField jTextFieldApe;
@@ -363,7 +386,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldTel1;
     private javax.swing.JTextField jTextFieldTel2;
     private javax.swing.JLabel nom;
-    private GUI.PanelBanner panelBanner1;
     private javax.swing.JLabel sec;
     private javax.swing.JLabel tel1;
     private javax.swing.JLabel tel2;
