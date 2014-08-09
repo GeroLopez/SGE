@@ -7,6 +7,8 @@ package GUI;
 public class Administracion extends javax.swing.JFrame {
 
     PanelCrearEstudiante crearEstudiante;
+    PanelConsultarEstudiante consul;
+    int panelActual;
 
     /**
      * Creates new form Administracion
@@ -14,10 +16,14 @@ public class Administracion extends javax.swing.JFrame {
     public Administracion() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
+        this.setSize(570, 500);
+//        this.setResizable(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/recursos/icono2.png")).getImage());
         this.setTitle("Sistema de gestión de entradas de investigación SGE");
         this.getContentPane().setBackground(java.awt.Color.white);
+//        crearEstudiante = new PanelCrearEstudiante();
+//        consultarEst = new PanelConsultarEstudiante();
+        panelActual = -1;
     }
 
     /**
@@ -29,7 +35,6 @@ public class Administracion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelConsultarEstudiante1 = new GUI.PanelConsultarEstudiante();
         barraMenu = new javax.swing.JMenuBar();
         archivo = new javax.swing.JMenu();
         configuracion = new javax.swing.JMenuItem();
@@ -70,6 +75,11 @@ public class Administracion extends javax.swing.JFrame {
         gestionarEstudiante.add(agregarEstudiante);
 
         consultarEstudiante.setText("Consultar");
+        consultarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarEstudianteActionPerformed(evt);
+            }
+        });
         gestionarEstudiante.add(consultarEstudiante);
 
         actualizarEstudiante.setText("Actualizar");
@@ -91,15 +101,11 @@ public class Administracion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(panelConsultarEstudiante1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelConsultarEstudiante1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 34, Short.MAX_VALUE))
+            .addGap(0, 379, Short.MAX_VALUE)
         );
 
         pack();
@@ -110,26 +116,56 @@ public class Administracion extends javax.swing.JFrame {
     }//GEN-LAST:event_configuracionActionPerformed
 
     private void actualizarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarEstudianteActionPerformed
-        
+        crearEstudiante(1);
     }//GEN-LAST:event_actualizarEstudianteActionPerformed
 
     private void agregarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarEstudianteActionPerformed
-        crearEstudiante();
+        crearEstudiante(0);
     }//GEN-LAST:event_agregarEstudianteActionPerformed
+
+    private void consultarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarEstudianteActionPerformed
+        consultarEst();
+    }//GEN-LAST:event_consultarEstudianteActionPerformed
 
     /**
      * Crear el panel donde se despliega la función para agregar estudiantes.
      */
-    public void crearEstudiante() {
-        try{
-        this.remove(crearEstudiante);
-        }catch(Exception e){
-            
-        }
-        crearEstudiante = new PanelCrearEstudiante();
-        crearEstudiante.setBounds(0, 0, 400, 430);
+    public void crearEstudiante(int tipo) {
+        liberarPaneles(0);
+        crearEstudiante = new PanelCrearEstudiante(tipo);
+//        this.setSize(crearEstudiante.getSize().width, crearEstudiante.getSize().height+60);
+        crearEstudiante.setBounds(0, 0, crearEstudiante.getSize().width, crearEstudiante.getSize().height);
         crearEstudiante.setVisible(true);
         this.getContentPane().add(crearEstudiante);
+        this.repaint();
+    }
+
+    public void consultarEst() {
+        liberarPaneles(1);
+        consul = new PanelConsultarEstudiante();
+//        this.setSize(consul.getSize().width, consul.getSize().height+60);
+        consul.setBounds(0, 0, consul.getSize().width, consul.getSize().height);
+        consul.setVisible(true);
+        this.getContentPane().add(consul);
+        this.repaint();
+    }
+
+    public void liberarPaneles(int idPanel) {
+        if (panelActual != -1) {
+            switch (panelActual) {
+                case 0:
+                    this.remove(crearEstudiante);
+                    break;
+                case 1:
+                    this.remove(consul);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+        }
+        panelActual = idPanel;
     }
 
     /**
@@ -139,7 +175,7 @@ public class Administracion extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -176,7 +212,6 @@ public class Administracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem consultarEstudiante;
     private javax.swing.JMenuItem desactivarEstudiante;
     private javax.swing.JMenu gestionarEstudiante;
-    private GUI.PanelConsultarEstudiante panelConsultarEstudiante1;
     private javax.swing.JMenuItem salir;
     // End of variables declaration//GEN-END:variables
 }

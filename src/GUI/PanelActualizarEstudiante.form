@@ -24,35 +24,26 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelTitulo" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="nom" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="ape" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="ced" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jTextFieldNom" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldApe" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldCed" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldTel1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldTel2" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="jLabelCedAct" min="-2" max="-2" attributes="0"/>
+                          <Component id="nom" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="ape" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="ced" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="tel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="tel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jTextFieldNom" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextFieldApe" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextFieldCed" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextFieldTel1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextFieldTel2" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jComboBoxCedulas" max="32767" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="boton" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="confirmar" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
@@ -86,7 +77,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -94,7 +85,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-              <Component id="jLabelTitulo" min="-2" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="nom" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -131,11 +122,7 @@
                   <Component id="jRadioButtonMon" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="boton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelCedAct" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxCedulas" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="confirmar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -266,7 +253,7 @@
         <Property name="text" type="java.lang.String" value="Investigaci&#xf3;n"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="boton">
+    <Component class="javax.swing.JButton" name="confirmar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="11" style="1"/>
@@ -277,7 +264,7 @@
         <Property name="text" type="java.lang.String" value="Confirmar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmarActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="ema">
@@ -293,7 +280,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldEmail">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabelTitulo">
+    <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="1"/>
@@ -318,25 +305,6 @@
     <Component class="javax.swing.JTextField" name="jTextFieldDir">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldDirActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelCedAct">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="11" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Seleccione la c&#xe9;dula del estudiante a actualizar"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBoxCedulas">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBoxCedulasItemStateChanged"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxCedulasActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

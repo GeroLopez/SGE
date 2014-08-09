@@ -15,6 +15,7 @@ public class Estudiante extends Usuario {
     private boolean esInvestigacion;
     private float horasDebe;
     private Date ultimaLecturaBitacora;
+    public String nombreSeccion;
 
     /**
      * Constructor por defecto de la clase.
@@ -36,11 +37,12 @@ public class Estudiante extends Usuario {
 
     public Estudiante(int id, int cedula, String nombre, String apellido, int telefono1,
             int telefono2, String direccion, String email, String nombreDeUsuario,
-            boolean activado, int tipoDeUsuario, int seccion, String fechaCreado, boolean monitoreo, boolean investigacion) {
+            boolean activado, int tipoDeUsuario, int seccion, String fechaCreado, boolean monitoreo, boolean investigacion,String nombreSeccion) {
 
         super(id, cedula, nombre, apellido, telefono1, telefono2, direccion, email, nombreDeUsuario, activado, tipoDeUsuario, seccion, fechaCreado);
         this.esMonitoreo = monitoreo;
         this.esInvestigacion = investigacion;
+        this.nombreSeccion = nombreSeccion;
     }
 
     /**

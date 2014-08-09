@@ -7,7 +7,6 @@ package GUI;
 
 import Controlador.DAO_Estudiante;
 import Modelo.Estudiante;
-import java.util.LinkedList;
 import javax.swing.DefaultListModel;
 
 /**
@@ -23,6 +22,8 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
      */
     public PanelConsultarEstudiante() {
         initComponents();
+        this.setSize(555, 434);
+        jComboBox1.setVisible(false);
         cargarEstudiantes();
     }
 
@@ -33,12 +34,11 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
         try {
             DAOestudiante = new DAO_Estudiante();
             DAOestudiante.conexion.conectar();
-            LinkedList<Estudiante> estudiantes;
-            estudiantes = DAOestudiante.consultarEstudiantes();
+            DAOestudiante.consultarEstudiantes();
             DAOestudiante.conexion.cerrarConexion();
             jListEstudiantes.removeAll();
             DefaultListModel modelo = new DefaultListModel();
-            for (Estudiante estudiante : estudiantes) {
+            for (Estudiante estudiante : DAOestudiante.estudiantes) {
                 modelo.addElement(estudiante.getNombre().concat(" " + estudiante.getApellido()));
             }
             jListEstudiantes.setModel(modelo);
@@ -47,10 +47,18 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
         }
     }
 
-    public void mostrarDatosEstudiante(Estudiante es) {
-        String informacion = "Nombre:\t" + es.getNombre() + " " + es.getApellido() + "\n"
-                + "Cédula:\t" + es.getCedula() + "\nTeléfono1:\t" + es.getTelefono1() + "\n"
-                + "Teléfono2:\t" + es.getTelefono2() + "\n";
+    public String mostrarDatosEstudiante(Estudiante es) {
+        String informacion = "\n   Nombre:\t   " + es.getNombre() + " " + es.getApellido() + "\n   "
+                + "Cédula:\t   " + es.getCedula() + "\n   Teléfono1:\t   " + es.getTelefono1() + "\n   "
+                + "Teléfono2:\t   " + es.getTelefono2() + "\n   e-mail:\t   " + es.getEmail() + "\n   "
+                + "Username:\t   " + es.getNombreDeUsuario() + "\n   Dirección:\t   " + es.getDireccion()
+                + "\n   Realiza\n   monitoreo:\t   " + ((es.isEsMonitoreo()) ? "si" : "no") + "\n   "
+                + "Realiza\n   investigación:\t   " + ((es.isEsInvestigacion()) ? "si" : "no") + "\n   "
+                + "Está activo:\t   " + ((es.isActivado()) ? "si" : "no") + "\n   "
+                + "Departamento\n   de:\t   " + es.nombreSeccion + "\n   "
+                + "Activo desde:\t   " + es.getFechaCreado() + "\n   "
+                + "Activo hasta:\t   " + es.getFechaSalida() + "\n";
+        return informacion;
     }
 
     /**
@@ -66,19 +74,42 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
         jListEstudiantes = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaInformacion = new javax.swing.JTextArea();
+        jComboBox1 = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
+        jListEstudiantes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListEstudiantes.setAlignmentX(1.0F);
+        jListEstudiantes.setAlignmentY(1.0F);
+        jListEstudiantes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListEstudiantesValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListEstudiantes);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(166, 187, 63));
         jLabel1.setText("Consultar Estudiante");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        jTextAreaInformacion.setEditable(false);
+        jTextAreaInformacion.setColumns(20);
+        jTextAreaInformacion.setRows(5);
+        jTextAreaInformacion.setBorder(null);
+        jScrollPane2.setViewportView(jTextAreaInformacion);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(166, 187, 63));
+        jButton1.setText("Ver resumen de actividades");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -87,32 +118,55 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
-                .addGap(40, 40, 40))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jListEstudiantesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListEstudiantesValueChanged
+        try {
+            String informacion = mostrarDatosEstudiante(DAOestudiante.estudiantes.get(jListEstudiantes.getSelectedIndex()));
+            jTextAreaInformacion.setText(informacion);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }//GEN-LAST:event_jListEstudiantesValueChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList jListEstudiantes;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextAreaInformacion;
     // End of variables declaration//GEN-END:variables
 }

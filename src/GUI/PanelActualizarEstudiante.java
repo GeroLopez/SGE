@@ -8,31 +8,22 @@ import java.awt.HeadlessException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.LinkedList;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Genaro López
  */
-public class PanelCrearEstudiante extends javax.swing.JPanel {
+public class PanelActualizarEstudiante extends javax.swing.JPanel {
 
-    int tipo;
-    int idEstudianteActualizar;
-
+    //int idSeccion;
     /**
      * Creates new form PanelCrearEstudiante
-     *
-     * @param tipo tipo de función a realizar 0 para agregar un estudiante 1
-     * para modificar un estudiante.
      */
-    public PanelCrearEstudiante(int tipo) {
+    public PanelActualizarEstudiante() {
         initComponents();
-        this.tipo = tipo;
-        this.setSize(552, 411);
+        this.setSize(500, 411);
         cargarSeccionesCombo();
-        verificarFuncionPanel(tipo);
-
     }
 
     /**
@@ -56,27 +47,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
     }
 
     /**
-     * Carga desde la base de datos las cédulas de los estudiantes en el
-     * jComboBox jComboBoxCedulas.
-     */
-    public void cargarCedulas() {
-        jComboBoxCedulas.removeAllItems();
-        try {
-            LinkedList<Integer> cedulas;
-            DAO_Estudiante DAOestudiante = new DAO_Estudiante();
-            DAOestudiante.conexion.conectar();
-            cedulas = DAOestudiante.consultarCedulas();
-            DAOestudiante.conexion.cerrarConexion();
-
-            for (Integer cedula : cedulas) {
-                jComboBoxCedulas.addItem(cedula);
-            }
-        } catch (Exception e) {
-            System.out.println("es por aca " + e.toString());
-        }
-    }
-
-    /**
      * Limpia los jTextField.
      */
     public void limpiar() {
@@ -90,9 +60,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         jTextFieldTel2.setText("");
     }
 
-    /**
-     * Agrega el estudiante a la base de datos.
-     */
     public void agregarEstudiante() {
         try {
             String nombre;
@@ -145,38 +112,28 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                 try {
                                     cedula = Integer.parseInt(jTextFieldCed.getText());
                                     ced.setForeground(new Color(166, 187, 63));
-                                    Timestamp fecha2;
-                                    fecha2 = new Timestamp(new java.util.Date().getTime());
                                     DAO_Estudiante estudiante;
                                     estudiante = new DAO_Estudiante(cedula, nombre, apellido,
-                                            telefono1, 2, seccion, fecha2.toString(), email, contraseña);
+                                            telefono1, 2, seccion, new Timestamp(new java.util.Date().getTime()).toString(), email, contraseña);
                                     if (telefono2 != -1) {
                                         estudiante.setTelefono2(telefono2);
                                     } else {
                                         estudiante.setTelefono2(telefono1);
                                     }
                                     String usuario;
-                                    usuario = nombre.substring(0, 1).concat(apellido.split(" ")[0]).concat(fecha2.toString().substring(0, 10));
+                                    usuario = nombre.substring(0, 1).concat(apellido.split(" ")[0]);
                                     estudiante.setNombreDeUsuario(usuario);
                                     estudiante.setEsMonitoreo(monitoreo);
                                     estudiante.setEsInvestigacion(investigacion);
                                     estudiante.setDireccion(direccion);
                                     //aca va el llamado al método del DAO
                                     estudiante.conexion.conectar();
-
-                                    String resultado;
-                                    if (tipo == 0) {
-                                        resultado = estudiante.AgregarEstudiante();
-                                    } else {
-                                        estudiante.setId(idEstudianteActualizar);
-                                        resultado = estudiante.actualizarEstudiante();
-                                        cargarCedulas();
-                                    }
+                                    String resultado = estudiante.AgregarEstudiante();
                                     estudiante.conexion.cerrarConexion();
                                     if (resultado.equals("exito")) {
                                         limpiar();
                                         JOptionPane.showMessageDialog(this,
-                                                "Estudiante "+((tipo==0)?"agregado":"actualizado")+" con éxito", "Éxito en la inserción", JOptionPane.INFORMATION_MESSAGE);
+                                                "Estudiante agregado con éxito", "Éxito en la inserción", JOptionPane.INFORMATION_MESSAGE);
                                     } else {
                                         JOptionPane.showMessageDialog(this,
                                                 resultado.concat("\n por favor verifique."), "Error", JOptionPane.ERROR_MESSAGE);
@@ -205,44 +162,9 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         }
     }
 
-    public void cargarDatosModificar(int cedulaConsultar) {
-        DAO_Estudiante estudiante = new DAO_Estudiante();
-        estudiante.conexion.conectar();
-        estudiante.cargarEstudianteActualizar(cedulaConsultar);
-        estudiante.conexion.cerrarConexion();
-
-        jTextFieldNom.setText(estudiante.getNombre());
-        jTextFieldApe.setText(estudiante.getApellido());
-        jTextFieldCed.setText("" + estudiante.getCedula());
-        jTextFieldTel1.setText("" + estudiante.getTelefono1());
-        jTextFieldTel2.setText("" + estudiante.getTelefono2());
-        jTextFieldDir.setText(estudiante.getDireccion());
-        jComboBoxSec.setSelectedIndex(estudiante.getSeccion() - 1);
-        jTextFieldEmail.setText(estudiante.getEmail());
-        jTextFieldCon.setText(estudiante.getPassword());
-        jRadioButtonMon.setSelected(estudiante.isEsMonitoreo());
-        jRadioButtonInv.setSelected(estudiante.isEsInvestigacion());
-        idEstudianteActualizar = estudiante.getId();
+    public void obtenerDatosEstudiante(){
+        
     }
-
-    /**
-     *
-     * @param tipo tipo de función a realizar 0 para agregar un estudiante 1
-     * para modificar un estudiante.
-     */
-    public void verificarFuncionPanel(int tipo) {
-        if (tipo == 0) {
-            jLabelCedAct.setVisible(false);
-            jComboBoxCedulas.setVisible(false);
-        } else {
-            jLabelTitulo.setText("Actualizar Estudiante");
-            boton.setText("Actualizar");
-            cargarCedulas();
-            int cedulaConsultar = Integer.parseInt(jComboBoxCedulas.getItemAt(jComboBoxCedulas.getSelectedIndex()).toString());
-            cargarDatosModificar(cedulaConsultar);
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -268,14 +190,12 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         jTextFieldCon = new javax.swing.JTextField();
         jRadioButtonMon = new javax.swing.JRadioButton();
         jRadioButtonInv = new javax.swing.JRadioButton();
-        boton = new javax.swing.JButton();
+        confirmar = new javax.swing.JButton();
         ema = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
-        jLabelTitulo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         dir = new javax.swing.JLabel();
         jTextFieldDir = new javax.swing.JTextField();
-        jLabelCedAct = new javax.swing.JLabel();
-        jComboBoxCedulas = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -326,12 +246,12 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         jRadioButtonInv.setForeground(new java.awt.Color(166, 187, 63));
         jRadioButtonInv.setText("Investigación");
 
-        boton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        boton.setForeground(new java.awt.Color(166, 187, 63));
-        boton.setText("Confirmar");
-        boton.addActionListener(new java.awt.event.ActionListener() {
+        confirmar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        confirmar.setForeground(new java.awt.Color(166, 187, 63));
+        confirmar.setText("Confirmar");
+        confirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonActionPerformed(evt);
+                confirmarActionPerformed(evt);
             }
         });
 
@@ -339,9 +259,9 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         ema.setForeground(new java.awt.Color(166, 187, 63));
         ema.setText("e-mail");
 
-        jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelTitulo.setForeground(new java.awt.Color(166, 187, 63));
-        jLabelTitulo.setText("Agregar Estudiante");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(166, 187, 63));
+        jLabel1.setText("Agregar Estudiante");
 
         dir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         dir.setForeground(new java.awt.Color(166, 187, 63));
@@ -353,20 +273,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
             }
         });
 
-        jLabelCedAct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelCedAct.setText("Seleccione la cédula del estudiante a actualizar");
-
-        jComboBoxCedulas.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxCedulasItemStateChanged(evt);
-            }
-        });
-        jComboBoxCedulas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxCedulasActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -374,30 +280,24 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTitulo)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nom)
-                                    .addComponent(ape)
-                                    .addComponent(ced)
-                                    .addComponent(tel1)
-                                    .addComponent(tel2))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextFieldNom)
-                                    .addComponent(jTextFieldApe)
-                                    .addComponent(jTextFieldCed)
-                                    .addComponent(jTextFieldTel1)
-                                    .addComponent(jTextFieldTel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabelCedAct))
+                            .addComponent(nom)
+                            .addComponent(ape)
+                            .addComponent(ced)
+                            .addComponent(tel1)
+                            .addComponent(tel2))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldNom)
+                            .addComponent(jTextFieldApe)
+                            .addComponent(jTextFieldCed)
+                            .addComponent(jTextFieldTel1)
+                            .addComponent(jTextFieldTel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBoxCedulas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(boton))
+                            .addComponent(confirmar)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
@@ -420,13 +320,13 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                 .addComponent(jRadioButtonInv)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                                 .addComponent(jRadioButtonMon)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(jLabelTitulo)
+                .addComponent(jLabel1)
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nom)
@@ -458,10 +358,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                     .addComponent(jRadioButtonInv)
                     .addComponent(jRadioButtonMon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boton)
-                    .addComponent(jLabelCedAct)
-                    .addComponent(jComboBoxCedulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(confirmar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -474,39 +371,24 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldConActionPerformed
 
-    private void botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActionPerformed
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
         agregarEstudiante();
-    }//GEN-LAST:event_botonActionPerformed
+    }//GEN-LAST:event_confirmarActionPerformed
 
     private void jTextFieldDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldDirActionPerformed
 
-    private void jComboBoxCedulasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxCedulasItemStateChanged
-
-    }//GEN-LAST:event_jComboBoxCedulasItemStateChanged
-
-    private void jComboBoxCedulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCedulasActionPerformed
-        try {
-            int cedulaConsultar = Integer.parseInt(jComboBoxCedulas.getItemAt(jComboBoxCedulas.getSelectedIndex()).toString());
-            cargarDatosModificar(cedulaConsultar);
-        } catch (Exception e) {
-
-        }
-    }//GEN-LAST:event_jComboBoxCedulasActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ape;
-    private javax.swing.JButton boton;
     private javax.swing.JLabel ced;
     private javax.swing.JLabel con;
+    private javax.swing.JButton confirmar;
     private javax.swing.JLabel dir;
     private javax.swing.JLabel ema;
-    private javax.swing.JComboBox jComboBoxCedulas;
     private javax.swing.JComboBox jComboBoxSec;
-    private javax.swing.JLabel jLabelCedAct;
-    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton jRadioButtonInv;
     private javax.swing.JRadioButton jRadioButtonMon;
     private javax.swing.JTextField jTextFieldApe;
