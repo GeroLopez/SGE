@@ -8,6 +8,7 @@ package GUI;
 import Controlador.DAO_Estudiante;
 import Modelo.Estudiante;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,15 +17,35 @@ import javax.swing.DefaultListModel;
 public class PanelConsultarEstudiante extends javax.swing.JPanel {
 
     DAO_Estudiante DAOestudiante;
+    int tipo;
 
     /**
      * Creates new form PanelConsultarEstudiante
+     *
+     * @param tipo tipo de función a realizar 0 para consultar un estudiante 1
+     * para desactivar un estudiante.
      */
-    public PanelConsultarEstudiante() {
+    public PanelConsultarEstudiante(int tipo) {
         initComponents();
         this.setSize(555, 434);
         jComboBox1.setVisible(false);
+        activar.setVisible(false);
         cargarEstudiantes();
+        this.tipo = tipo;
+        verificarFuncionPanel(tipo);
+    }
+
+    /**
+     *
+     * @param tipo tipo de función a realizar 0 para agregar un estudiante 1
+     * para modificar un estudiante.
+     */
+    public void verificarFuncionPanel(int tipo) {
+        if (tipo != 0) {
+            activar.setVisible(true);
+            boton.setText("Desactivar");
+            jLabelTitulo.setText("Desactivar Estudiante");
+        }
     }
 
     /**
@@ -72,11 +93,12 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jListEstudiantes = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaInformacion = new javax.swing.JTextArea();
         jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        boton = new javax.swing.JButton();
+        activar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -90,9 +112,9 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jListEstudiantes);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(166, 187, 63));
-        jLabel1.setText("Consultar Estudiante");
+        jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(166, 187, 63));
+        jLabelTitulo.setText("Consultar Estudiante");
 
         jTextAreaInformacion.setEditable(false);
         jTextAreaInformacion.setColumns(20);
@@ -102,12 +124,21 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(166, 187, 63));
-        jButton1.setText("Ver resumen de actividades");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        boton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        boton.setForeground(new java.awt.Color(166, 187, 63));
+        boton.setText("Ver resumen de actividades");
+        boton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonActionPerformed(evt);
+            }
+        });
+
+        activar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        activar.setForeground(new java.awt.Color(166, 187, 63));
+        activar.setText("Activar");
+        activar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activarActionPerformed(evt);
             }
         });
 
@@ -119,25 +150,32 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addGap(22, 22, 22))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelTitulo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(activar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(boton)))
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(14, 14, 14)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jLabelTitulo)
+                    .addComponent(boton)
+                    .addComponent(activar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2)
@@ -148,22 +186,49 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
 
     private void jListEstudiantesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListEstudiantesValueChanged
         try {
+            int itemSeleccionado = jListEstudiantes.getSelectedIndex();
             String informacion = mostrarDatosEstudiante(DAOestudiante.estudiantes.get(jListEstudiantes.getSelectedIndex()));
             jTextAreaInformacion.setText(informacion);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            jTextAreaInformacion.setText("");
+            System.out.println("el error es por aca " + e.toString());
         }
     }//GEN-LAST:event_jListEstudiantesValueChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    public void activar_desactivarEstudiante(int opcion) {
+        if (tipo != 0) {
+            int idEstudiante = DAOestudiante.estudiantes.get(jListEstudiantes.getSelectedIndex()).getId();
+            DAOestudiante.setId(idEstudiante);
+            DAOestudiante.conexion.conectar();
+            String resultado = DAOestudiante.activar_desactivarUsuario(opcion);
+            DAOestudiante.conexion.cerrarConexion();
+            if (resultado.equals("exito")) {
+                JOptionPane.showMessageDialog(this,
+                        "Estudiante " + ((opcion == 0) ? "activado" : "desactivado") + " con éxito", "Éxito en la inserción", JOptionPane.INFORMATION_MESSAGE);
+                cargarEstudiantes();
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        resultado.concat("\n por favor verifique."), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActionPerformed
+        if (tipo != 0) {
+            activar_desactivarEstudiante(1);
+        }
+    }//GEN-LAST:event_botonActionPerformed
+
+    private void activarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activarActionPerformed
+        activar_desactivarEstudiante(0);
+    }//GEN-LAST:event_activarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton activar;
+    private javax.swing.JButton boton;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JList jListEstudiantes;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

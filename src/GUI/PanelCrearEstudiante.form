@@ -72,10 +72,10 @@
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jTextFieldCon" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jComboBoxSec" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jTextFieldEmail" pref="153" max="32767" attributes="0"/>
                                   <Component id="jTextFieldDir" max="32767" attributes="0"/>
+                                  <Component id="contra" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -121,7 +121,7 @@
                   <Component id="tel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldTel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="con" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldCon" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="contra" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -236,11 +236,6 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldCon">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldConActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JRadioButton" name="jRadioButtonMon">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -338,6 +333,8 @@
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBoxCedulasItemStateChanged"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxCedulasActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="contra">
     </Component>
   </SubComponents>
 </Form>

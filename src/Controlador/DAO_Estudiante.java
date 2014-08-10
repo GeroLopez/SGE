@@ -15,14 +15,17 @@ public class DAO_Estudiante extends Estudiante {
     public ConexionBD conexion;
     public LinkedList<Estudiante> estudiantes;
 
-    public DAO_Estudiante(int cedula, String nombre, String apellido,
-            int telefono1, int tipoDeUsuario, int seccion, String fechaCreado,
+    public DAO_Estudiante(long cedula, String nombre, String apellido,
+            long telefono1, int tipoDeUsuario, int seccion, String fechaCreado,
             String email, String password) {
         super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion,
                 fechaCreado, email, password);
         conexion = new ConexionBD();
     }
 
+    /**
+     * Constructor sin parámetros.
+     */
     public DAO_Estudiante() {
         super(0, null, null, 0, 0, 0, null, null, null);
         conexion = new Conexion.ConexionBD();
@@ -155,6 +158,7 @@ public class DAO_Estudiante extends Estudiante {
 
     /**
      * Actualiza el registro asociado al estudiante.
+     *
      * @return una cadena que indica el estado de la inserción, en caso exitoso
      * retorna la cadena "exito", en caso contrario retorna un mensaje con la
      * causa del error.
@@ -172,5 +176,10 @@ public class DAO_Estudiante extends Estudiante {
             System.out.println(e.toString());
         }
         return resultado;
+    }
+
+    public String activar_desactivarUsuario(int opcion) {
+        String sql = "UPDATE users SET activated=" + ((opcion == 0) ? "true" : "false") + " WHERE id=" + this.getId();
+        return conexion.insertar(sql);
     }
 }

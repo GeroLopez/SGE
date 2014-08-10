@@ -91,6 +91,11 @@ public class Administracion extends javax.swing.JFrame {
         gestionarEstudiante.add(actualizarEstudiante);
 
         desactivarEstudiante.setText("Desactivar");
+        desactivarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                desactivarEstudianteActionPerformed(evt);
+            }
+        });
         gestionarEstudiante.add(desactivarEstudiante);
 
         barraMenu.add(gestionarEstudiante);
@@ -124,25 +129,37 @@ public class Administracion extends javax.swing.JFrame {
     }//GEN-LAST:event_agregarEstudianteActionPerformed
 
     private void consultarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarEstudianteActionPerformed
-        consultarEst();
+        consultarEst(0);
     }//GEN-LAST:event_consultarEstudianteActionPerformed
 
+    private void desactivarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desactivarEstudianteActionPerformed
+        consultarEst(1);
+    }//GEN-LAST:event_desactivarEstudianteActionPerformed
+
     /**
-     * Crear el panel donde se despliega la función para agregar estudiantes.
+     * Crear el panel donde se despliega la función para agregar estudiantes o
+     * para actualizar un estudiante dependiendo del valor del parámetro tipo.
+     * @param tipo tipo de función a realizar 0 para agregar un estudiante 1
+     * para modificar un estudiante.
      */
     public void crearEstudiante(int tipo) {
         liberarPaneles(0);
         crearEstudiante = new PanelCrearEstudiante(tipo);
-//        this.setSize(crearEstudiante.getSize().width, crearEstudiante.getSize().height+60);
         crearEstudiante.setBounds(0, 0, crearEstudiante.getSize().width, crearEstudiante.getSize().height);
         crearEstudiante.setVisible(true);
         this.getContentPane().add(crearEstudiante);
         this.repaint();
     }
 
-    public void consultarEst() {
+    /**
+     * Crear el panel donde se despliega la función para consultar estudiantes o
+     * para desactivar un estudiante dependiendo del valor del parámetro tipo.
+     * @param tipo tipo de función a realizar 0 para consultar un estudiante 1
+     * para desactivar un estudiante.
+     */
+    public void consultarEst(int tipo) {
         liberarPaneles(1);
-        consul = new PanelConsultarEstudiante();
+        consul = new PanelConsultarEstudiante(tipo);
 //        this.setSize(consul.getSize().width, consul.getSize().height+60);
         consul.setBounds(0, 0, consul.getSize().width, consul.getSize().height);
         consul.setVisible(true);
@@ -150,6 +167,12 @@ public class Administracion extends javax.swing.JFrame {
         this.repaint();
     }
 
+    /**
+     * Remueve el panel que este desplegado en la pantalla y setea el panelActual
+     * con el que se cambia al panel nuevo, esto es para cambiar de visualización
+     * entre las opciones de la barra de menú.
+     * @param idPanel identificador del panel.
+     */
     public void liberarPaneles(int idPanel) {
         if (panelActual != -1) {
             switch (panelActual) {

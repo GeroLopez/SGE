@@ -30,12 +30,31 @@ public class Estudiante extends Usuario {
      * @param email El email del estudiante.
      * @param password La contraseña del estudiante.
      */
-    public Estudiante(int cedula, String nombre, String apellido, int telefono1,
+    public Estudiante(long cedula, String nombre, String apellido, long telefono1,
             int tipoDeUsuario, int seccion, String fechaCreado, String email, String password) {
         super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion, fechaCreado, email, password);
     }
 
-    public Estudiante(int id, int cedula, String nombre, String apellido, int telefono1,
+    /**
+     *
+     * @param id
+     * @param cedula
+     * @param nombre
+     * @param apellido
+     * @param telefono1
+     * @param telefono2
+     * @param direccion
+     * @param email
+     * @param nombreDeUsuario
+     * @param activado
+     * @param tipoDeUsuario
+     * @param seccion
+     * @param fechaCreado
+     * @param monitoreo
+     * @param investigacion
+     * @param nombreSeccion
+     */
+    public Estudiante(int id, long cedula, String nombre, String apellido, long telefono1,
             int telefono2, String direccion, String email, String nombreDeUsuario,
             boolean activado, int tipoDeUsuario, int seccion, String fechaCreado, boolean monitoreo, boolean investigacion,String nombreSeccion) {
 

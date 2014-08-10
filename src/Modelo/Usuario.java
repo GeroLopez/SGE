@@ -11,11 +11,11 @@ public class Usuario {
     // id del usuario en la base de datos.
     private int id;
     // La cédula del usuario.
-    private int cedula;
+    private long cedula;
     // El teléfono1 del usuario.
-    private int telefono1;
+    private long telefono1;
     // El teléfono2 del usuario.
-    private int telefono2;
+    private long telefono2;
     // Representa el tipo de usuario.
     private int tipoDeUsuario;
     // Indica a que sección del observatorio pertenece.
@@ -54,7 +54,7 @@ public class Usuario {
      * @param email e-mail del usuario.
      * @param password contraseña.
      */
-    public Usuario(int cedula, String nombre, String apellido, int telefono1,
+    public Usuario(long cedula, String nombre, String apellido, long telefono1,
             int tipoDeUsuario, int seccion, String fechaCreado, String email, String password) {
         this.cedula = cedula;
         this.telefono1 = telefono1;
@@ -69,7 +69,7 @@ public class Usuario {
         this.password = password;
     }
 
-    public Usuario(int id, int cedula, String nombre, String apellido, int telefono1, 
+    public Usuario(int id, long cedula, String nombre, String apellido, long telefono1, 
             int telefono2, String direccion, String email, String nombreDeUsuario, 
             boolean activado, int tipoDeUsuario, int seccion, String fechaCreado) {
         this.id = id;
@@ -103,7 +103,7 @@ public class Usuario {
     /**
      * @return the cedula
      */
-    public int getCedula() {
+    public long getCedula() {
         return cedula;
     }
 
@@ -117,7 +117,7 @@ public class Usuario {
     /**
      * @return the telefono1
      */
-    public int getTelefono1() {
+    public long getTelefono1() {
         return telefono1;
     }
 
@@ -131,14 +131,14 @@ public class Usuario {
     /**
      * @return the telefono2
      */
-    public int getTelefono2() {
+    public long getTelefono2() {
         return telefono2;
     }
 
     /**
      * @param telefono2 the telefono2 to set
      */
-    public void setTelefono2(int telefono2) {
+    public void setTelefono2(long telefono2) {
         this.telefono2 = telefono2;
     }
 

@@ -85,7 +85,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         jTextFieldCed.setText("");
         jTextFieldEmail.setText("");
         jTextFieldDir.setText("");
-        jTextFieldCon.setText("");
+        contra.setText("");
         jTextFieldTel1.setText("");
         jTextFieldTel2.setText("");
     }
@@ -100,9 +100,9 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
             String contraseña;
             String email;
             String direccion = jTextFieldDir.getText();
-            int cedula;
-            int telefono1 = 0;
-            int telefono2 = -1;
+            long cedula;
+            long telefono1 = 0;
+            long telefono2 = -1;
             int seccion = jComboBoxSec.getSelectedIndex() + 1;
             Calendar fecha = Calendar.getInstance();
             boolean investigacion = jRadioButtonInv.isSelected();
@@ -113,8 +113,8 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                 if (!jTextFieldApe.getText().equals("")) {
                     apellido = jTextFieldApe.getText();
                     ape.setForeground(new Color(166, 187, 63));
-                    if (!jTextFieldCon.getText().equals("")) {
-                        contraseña = jTextFieldCon.getText();
+                    if (!contra.getText().equals("")) {
+                        contraseña = contra.getText();
                         con.setForeground(new Color(166, 187, 63));
                         if (!jTextFieldEmail.getText().equals("")) {
                             email = jTextFieldEmail.getText();
@@ -126,7 +126,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                             } else {
                                 if (!jTextFieldTel1.getText().equals("")) {
                                     try {
-                                        telefono1 = Integer.parseInt(jTextFieldTel1.getText());
+                                        telefono1 = Long.parseLong(jTextFieldTel1.getText());
                                         tel1.setForeground(new Color(166, 187, 63));
                                     } catch (Exception e) {
                                         jTextFieldTel1.setText("");
@@ -135,7 +135,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                 }
                                 if (!jTextFieldTel2.getText().equals("")) {
                                     try {
-                                        telefono2 = Integer.parseInt(jTextFieldTel2.getText());
+                                        telefono2 = Long.parseLong(jTextFieldTel2.getText());
                                         tel2.setForeground(new Color(166, 187, 63));
                                     } catch (Exception e) {
                                         jTextFieldTel2.setText("");
@@ -143,7 +143,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                     }
                                 }
                                 try {
-                                    cedula = Integer.parseInt(jTextFieldCed.getText());
+                                    cedula = Long.parseLong(jTextFieldCed.getText());
                                     ced.setForeground(new Color(166, 187, 63));
                                     Timestamp fecha2;
                                     fecha2 = new Timestamp(new java.util.Date().getTime());
@@ -219,7 +219,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         jTextFieldDir.setText(estudiante.getDireccion());
         jComboBoxSec.setSelectedIndex(estudiante.getSeccion() - 1);
         jTextFieldEmail.setText(estudiante.getEmail());
-        jTextFieldCon.setText(estudiante.getPassword());
+        contra.setText(estudiante.getPassword());
         jRadioButtonMon.setSelected(estudiante.isEsMonitoreo());
         jRadioButtonInv.setSelected(estudiante.isEsInvestigacion());
         idEstudianteActualizar = estudiante.getId();
@@ -265,7 +265,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         jTextFieldTel1 = new javax.swing.JTextField();
         jTextFieldTel2 = new javax.swing.JTextField();
         jComboBoxSec = new javax.swing.JComboBox();
-        jTextFieldCon = new javax.swing.JTextField();
         jRadioButtonMon = new javax.swing.JRadioButton();
         jRadioButtonInv = new javax.swing.JRadioButton();
         boton = new javax.swing.JButton();
@@ -276,6 +275,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         jTextFieldDir = new javax.swing.JTextField();
         jLabelCedAct = new javax.swing.JLabel();
         jComboBoxCedulas = new javax.swing.JComboBox();
+        contra = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -306,12 +306,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         con.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         con.setForeground(new java.awt.Color(166, 187, 63));
         con.setText("Contraseña");
-
-        jTextFieldCon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldConActionPerformed(evt);
-            }
-        });
 
         jRadioButtonMon.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jRadioButtonMon.setForeground(new java.awt.Color(166, 187, 63));
@@ -412,10 +406,10 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                         .addComponent(ema)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextFieldCon)
                                     .addComponent(jComboBoxSec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldDir)))
+                                    .addComponent(jTextFieldDir)
+                                    .addComponent(contra)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jRadioButtonInv)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
@@ -450,7 +444,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                     .addComponent(tel1)
                     .addComponent(jTextFieldTel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(con)
-                    .addComponent(jTextFieldCon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(contra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tel2)
@@ -469,10 +463,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
     private void jRadioButtonMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonMonActionPerformed
-
-    private void jTextFieldConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldConActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldConActionPerformed
 
     private void botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActionPerformed
         agregarEstudiante();
@@ -501,6 +491,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
     private javax.swing.JButton boton;
     private javax.swing.JLabel ced;
     private javax.swing.JLabel con;
+    private javax.swing.JPasswordField contra;
     private javax.swing.JLabel dir;
     private javax.swing.JLabel ema;
     private javax.swing.JComboBox jComboBoxCedulas;
@@ -511,7 +502,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
     private javax.swing.JRadioButton jRadioButtonMon;
     private javax.swing.JTextField jTextFieldApe;
     private javax.swing.JTextField jTextFieldCed;
-    private javax.swing.JTextField jTextFieldCon;
     private javax.swing.JTextField jTextFieldDir;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldNom;
