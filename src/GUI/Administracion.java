@@ -17,7 +17,7 @@ public class Administracion extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setSize(570, 500);
-//        this.setResizable(false);
+        this.setResizable(false);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/recursos/icono2.png")).getImage());
         this.setTitle("Sistema de gestión de entradas de investigación SGE");
         this.getContentPane().setBackground(java.awt.Color.white);
@@ -35,6 +35,8 @@ public class Administracion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelBanner1 = new GUI.PanelBanner();
+        titulo = new javax.swing.JLabel();
         barraMenu = new javax.swing.JMenuBar();
         archivo = new javax.swing.JMenu();
         configuracion = new javax.swing.JMenuItem();
@@ -46,6 +48,27 @@ public class Administracion extends javax.swing.JFrame {
         desactivarEstudiante = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        titulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        titulo.setForeground(new java.awt.Color(255, 255, 255));
+        titulo.setPreferredSize(new java.awt.Dimension(15, 30));
+
+        javax.swing.GroupLayout panelBanner1Layout = new javax.swing.GroupLayout(panelBanner1);
+        panelBanner1.setLayout(panelBanner1Layout);
+        panelBanner1Layout.setHorizontalGroup(
+            panelBanner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBanner1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+        panelBanner1Layout.setVerticalGroup(
+            panelBanner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBanner1Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
 
         archivo.setText("Archivo");
 
@@ -106,11 +129,13 @@ public class Administracion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(panelBanner1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelBanner1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 274, Short.MAX_VALUE))
         );
 
         pack();
@@ -122,30 +147,35 @@ public class Administracion extends javax.swing.JFrame {
 
     private void actualizarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarEstudianteActionPerformed
         crearEstudiante(1);
+        titulo.setText("Actualizar Estudiante");
     }//GEN-LAST:event_actualizarEstudianteActionPerformed
 
     private void agregarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarEstudianteActionPerformed
         crearEstudiante(0);
+        titulo.setText("Agregar Estudiante");
     }//GEN-LAST:event_agregarEstudianteActionPerformed
 
     private void consultarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarEstudianteActionPerformed
         consultarEst(0);
+        titulo.setText("Consultar Estudiante");
     }//GEN-LAST:event_consultarEstudianteActionPerformed
 
     private void desactivarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desactivarEstudianteActionPerformed
         consultarEst(1);
+        titulo.setText("Activar/Desactivar Estudiante");
     }//GEN-LAST:event_desactivarEstudianteActionPerformed
 
     /**
      * Crear el panel donde se despliega la función para agregar estudiantes o
      * para actualizar un estudiante dependiendo del valor del parámetro tipo.
+     *
      * @param tipo tipo de función a realizar 0 para agregar un estudiante 1
      * para modificar un estudiante.
      */
     public void crearEstudiante(int tipo) {
         liberarPaneles(0);
         crearEstudiante = new PanelCrearEstudiante(tipo);
-        crearEstudiante.setBounds(0, 0, crearEstudiante.getSize().width, crearEstudiante.getSize().height);
+        crearEstudiante.setBounds(0, 100, crearEstudiante.getSize().width, crearEstudiante.getSize().height);
         crearEstudiante.setVisible(true);
         this.getContentPane().add(crearEstudiante);
         this.repaint();
@@ -154,6 +184,7 @@ public class Administracion extends javax.swing.JFrame {
     /**
      * Crear el panel donde se despliega la función para consultar estudiantes o
      * para desactivar un estudiante dependiendo del valor del parámetro tipo.
+     *
      * @param tipo tipo de función a realizar 0 para consultar un estudiante 1
      * para desactivar un estudiante.
      */
@@ -161,16 +192,17 @@ public class Administracion extends javax.swing.JFrame {
         liberarPaneles(1);
         consul = new PanelConsultarEstudiante(tipo);
 //        this.setSize(consul.getSize().width, consul.getSize().height+60);
-        consul.setBounds(0, 0, consul.getSize().width, consul.getSize().height);
+        consul.setBounds(0, 100, consul.getSize().width, consul.getSize().height);
         consul.setVisible(true);
         this.getContentPane().add(consul);
         this.repaint();
     }
 
     /**
-     * Remueve el panel que este desplegado en la pantalla y setea el panelActual
-     * con el que se cambia al panel nuevo, esto es para cambiar de visualización
-     * entre las opciones de la barra de menú.
+     * Remueve el panel que este desplegado en la pantalla y setea el
+     * panelActual con el que se cambia al panel nuevo, esto es para cambiar de
+     * visualización entre las opciones de la barra de menú.
+     *
      * @param idPanel identificador del panel.
      */
     public void liberarPaneles(int idPanel) {
@@ -235,6 +267,8 @@ public class Administracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem consultarEstudiante;
     private javax.swing.JMenuItem desactivarEstudiante;
     private javax.swing.JMenu gestionarEstudiante;
+    private GUI.PanelBanner panelBanner1;
     private javax.swing.JMenuItem salir;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }

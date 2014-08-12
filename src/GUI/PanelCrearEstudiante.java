@@ -8,7 +8,6 @@ import java.awt.HeadlessException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.LinkedList;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -149,11 +148,11 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                     fecha2 = new Timestamp(new java.util.Date().getTime());
                                     DAO_Estudiante estudiante;
                                     estudiante = new DAO_Estudiante(cedula, nombre, apellido,
-                                            telefono1, 2, seccion, fecha2.toString(), email, contraseña);
+                                            ""+telefono1, 2, seccion, fecha2.toString(), email, contraseña);
                                     if (telefono2 != -1) {
-                                        estudiante.setTelefono2(telefono2);
+                                        estudiante.setTelefono2(""+telefono2);
                                     } else {
-                                        estudiante.setTelefono2(telefono1);
+                                        estudiante.setTelefono2(""+telefono1);
                                     }
                                     String usuario;
                                     usuario = nombre.substring(0, 1).concat(apellido.split(" ")[0]).concat(fecha2.toString().substring(0, 10));
@@ -163,8 +162,8 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                     estudiante.setDireccion(direccion);
                                     //aca va el llamado al método del DAO
                                     estudiante.conexion.conectar();
-
                                     String resultado;
+                                    int indice =jComboBoxCedulas.getSelectedIndex();
                                     if (tipo == 0) {
                                         resultado = estudiante.AgregarEstudiante();
                                     } else {
@@ -177,6 +176,9 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                         limpiar();
                                         JOptionPane.showMessageDialog(this,
                                                 "Estudiante "+((tipo==0)?"agregado":"actualizado")+" con éxito", "Éxito en la inserción", JOptionPane.INFORMATION_MESSAGE);
+                                   cargarCedulas();
+                                   cargarSeccionesCombo();
+                                   jComboBoxCedulas.setSelectedIndex(indice);
                                     } else {
                                         JOptionPane.showMessageDialog(this,
                                                 resultado.concat("\n por favor verifique."), "Error", JOptionPane.ERROR_MESSAGE);
@@ -235,7 +237,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
             jLabelCedAct.setVisible(false);
             jComboBoxCedulas.setVisible(false);
         } else {
-            jLabelTitulo.setText("Actualizar Estudiante");
+            
             boton.setText("Actualizar");
             cargarCedulas();
             int cedulaConsultar = Integer.parseInt(jComboBoxCedulas.getItemAt(jComboBoxCedulas.getSelectedIndex()).toString());
@@ -270,7 +272,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         boton = new javax.swing.JButton();
         ema = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
-        jLabelTitulo = new javax.swing.JLabel();
         dir = new javax.swing.JLabel();
         jTextFieldDir = new javax.swing.JTextField();
         jLabelCedAct = new javax.swing.JLabel();
@@ -333,10 +334,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         ema.setForeground(new java.awt.Color(166, 187, 63));
         ema.setText("e-mail");
 
-        jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabelTitulo.setForeground(new java.awt.Color(166, 187, 63));
-        jLabelTitulo.setText("Agregar Estudiante");
-
         dir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         dir.setForeground(new java.awt.Color(166, 187, 63));
         dir.setText("Dirección");
@@ -367,8 +364,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTitulo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -385,43 +381,44 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                                     .addComponent(jTextFieldCed)
                                     .addComponent(jTextFieldTel1)
                                     .addComponent(jTextFieldTel2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabelCedAct))
+                            .addComponent(jLabelCedAct, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBoxCedulas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(boton))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(sec)
-                                            .addComponent(dir))
-                                        .addGap(31, 31, 31))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(con)
-                                        .addGap(18, 18, 18))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(ema)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBoxSec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldDir)
-                                    .addComponent(contra)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jRadioButtonInv)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                                .addComponent(jRadioButtonMon)))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(dir)
+                                            .addGap(31, 31, 31))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(con)
+                                            .addGap(18, 18, 18))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(ema, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(sec, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jComboBoxSec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldDir)
+                                        .addComponent(contra)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jRadioButtonInv)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                                    .addComponent(jRadioButtonMon)))
+                            .addComponent(jComboBoxCedulas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(boton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabelTitulo)
-                .addGap(26, 26, 26)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelCedAct)
+                    .addComponent(jComboBoxCedulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nom)
                     .addComponent(jTextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -451,12 +448,9 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
                     .addComponent(jTextFieldTel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRadioButtonInv)
                     .addComponent(jRadioButtonMon))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(boton)
-                    .addComponent(jLabelCedAct)
-                    .addComponent(jComboBoxCedulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(boton)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -497,7 +491,6 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
     private javax.swing.JComboBox jComboBoxCedulas;
     private javax.swing.JComboBox jComboBoxSec;
     private javax.swing.JLabel jLabelCedAct;
-    private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JRadioButton jRadioButtonInv;
     private javax.swing.JRadioButton jRadioButtonMon;
     private javax.swing.JTextField jTextFieldApe;

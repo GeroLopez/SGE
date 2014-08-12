@@ -44,16 +44,17 @@ public class HiloReloj extends Thread {
     public HiloReloj(JLabel jLabelReloj) {
         continuar = true;
         this.jLabelReloj = jLabelReloj;
+        setCalendario(Calendar.getInstance());
     }
 
     @Override
     public void run() {
         while (isContinuar()) {
             String reloj = "";
-            calendario = Calendar.getInstance();
-            hora = calendario.get(Calendar.HOUR_OF_DAY);
-            minuto = calendario.get(Calendar.MINUTE);
-            segundo = calendario.get(Calendar.SECOND);
+            setCalendario(Calendar.getInstance());
+            hora = getCalendario().get(Calendar.HOUR_OF_DAY);
+            minuto = getCalendario().get(Calendar.MINUTE);
+            segundo = getCalendario().get(Calendar.SECOND);
             if (hora < 10) {
                 reloj = reloj.concat("0");
             }
@@ -82,6 +83,20 @@ public class HiloReloj extends Thread {
      */
     public void setContinuar(boolean continuar) {
         this.continuar = continuar;
+    }
+
+    /**
+     * @return the calendario
+     */
+    public Calendar getCalendario() {
+        return calendario;
+    }
+
+    /**
+     * @param calendario the calendario to set
+     */
+    public void setCalendario(Calendar calendario) {
+        this.calendario = calendario;
     }
 
 }

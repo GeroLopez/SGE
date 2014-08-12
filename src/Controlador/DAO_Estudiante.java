@@ -16,7 +16,7 @@ public class DAO_Estudiante extends Estudiante {
     public LinkedList<Estudiante> estudiantes;
 
     public DAO_Estudiante(long cedula, String nombre, String apellido,
-            long telefono1, int tipoDeUsuario, int seccion, String fechaCreado,
+            String telefono1, int tipoDeUsuario, int seccion, String fechaCreado,
             String email, String password) {
         super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion,
                 fechaCreado, email, password);
@@ -27,7 +27,7 @@ public class DAO_Estudiante extends Estudiante {
      * Constructor sin parámetros.
      */
     public DAO_Estudiante() {
-        super(0, null, null, 0, 0, 0, null, null, null);
+        super(0, null, null, null, 0, 0, null, null, null);
         conexion = new Conexion.ConexionBD();
     }
 
@@ -69,16 +69,16 @@ public class DAO_Estudiante extends Estudiante {
                 int cedula = Integer.parseInt(conexion.getRes().getString(2));
                 String nombre = conexion.getRes().getString(3);
                 String apellido = conexion.getRes().getString(4);
-                int tel1 = 0;
-                int tel2 = 0;
+                String tel1 = null ;
+                String tel2 = null ;
                 try {
-                    tel1 = Integer.parseInt(conexion.getRes().getString(5));
-                    tel2 = Integer.parseInt(conexion.getRes().getString(6));
+                    tel1 = conexion.getRes().getString(5);
+                    tel2 = conexion.getRes().getString(6);
                 } catch (NumberFormatException e) {
 
                 }
                 try {
-                    tel2 = Integer.parseInt(conexion.getRes().getString(6));
+                    tel2 = conexion.getRes().getString(6);
                 } catch (NumberFormatException e) {
 
                 }
@@ -119,8 +119,8 @@ public class DAO_Estudiante extends Estudiante {
                 this.setApellido(conexion.getRes().getString(2));
                 this.setCedula(Integer.parseInt(conexion.getRes().getString(3)));
                 try {
-                    this.setTelefono1(Integer.parseInt(conexion.getRes().getString(4)));
-                    this.setTelefono2(Integer.parseInt(conexion.getRes().getString(5)));
+                    this.setTelefono1(conexion.getRes().getString(4));
+                    this.setTelefono2(conexion.getRes().getString(5));
                 } catch (NumberFormatException e) {
                 }
                 String direccion = conexion.getRes().getString(6);

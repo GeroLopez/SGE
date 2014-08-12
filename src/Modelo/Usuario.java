@@ -13,9 +13,9 @@ public class Usuario {
     // La cédula del usuario.
     private long cedula;
     // El teléfono1 del usuario.
-    private long telefono1;
+    private String telefono1;
     // El teléfono2 del usuario.
-    private long telefono2;
+    private String telefono2;
     // Representa el tipo de usuario.
     private int tipoDeUsuario;
     // Indica a que sección del observatorio pertenece.
@@ -54,7 +54,7 @@ public class Usuario {
      * @param email e-mail del usuario.
      * @param password contraseña.
      */
-    public Usuario(long cedula, String nombre, String apellido, long telefono1,
+    public Usuario(long cedula, String nombre, String apellido, String telefono1,
             int tipoDeUsuario, int seccion, String fechaCreado, String email, String password) {
         this.cedula = cedula;
         this.telefono1 = telefono1;
@@ -69,8 +69,8 @@ public class Usuario {
         this.password = password;
     }
 
-    public Usuario(int id, long cedula, String nombre, String apellido, long telefono1, 
-            int telefono2, String direccion, String email, String nombreDeUsuario, 
+    public Usuario(int id, long cedula, String nombre, String apellido, String telefono1, 
+            String telefono2, String direccion, String email, String nombreDeUsuario, 
             boolean activado, int tipoDeUsuario, int seccion, String fechaCreado) {
         this.id = id;
         this.cedula = cedula;
@@ -117,28 +117,28 @@ public class Usuario {
     /**
      * @return the telefono1
      */
-    public long getTelefono1() {
+    public String getTelefono1() {
         return telefono1;
     }
 
     /**
      * @param telefono1 the telefono1 to set
      */
-    public void setTelefono1(int telefono1) {
+    public void setTelefono1(String telefono1) {
         this.telefono1 = telefono1;
     }
 
     /**
      * @return the telefono2
      */
-    public long getTelefono2() {
+    public String getTelefono2() {
         return telefono2;
     }
 
     /**
      * @param telefono2 the telefono2 to set
      */
-    public void setTelefono2(long telefono2) {
+    public void setTelefono2(String telefono2) {
         this.telefono2 = telefono2;
     }
 

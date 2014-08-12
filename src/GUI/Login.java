@@ -1,7 +1,6 @@
 package GUI;
 
 import Controlador.DAO_Login;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -110,7 +109,7 @@ public class Login extends javax.swing.JFrame {
         );
         panelBanner1Layout.setVerticalGroup(
             panelBanner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 105, Short.MAX_VALUE)
         );
 
         etiquetaError.setBackground(new java.awt.Color(255, 255, 255));
@@ -142,10 +141,10 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(panelBanner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabelLogo)
                         .addContainerGap(22, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(etiquetaError)
                         .addGap(18, 18, 18)

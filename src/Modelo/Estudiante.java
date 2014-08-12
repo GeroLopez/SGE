@@ -30,7 +30,7 @@ public class Estudiante extends Usuario {
      * @param email El email del estudiante.
      * @param password La contraseña del estudiante.
      */
-    public Estudiante(long cedula, String nombre, String apellido, long telefono1,
+    public Estudiante(long cedula, String nombre, String apellido, String telefono1,
             int tipoDeUsuario, int seccion, String fechaCreado, String email, String password) {
         super(cedula, nombre, apellido, telefono1, tipoDeUsuario, seccion, fechaCreado, email, password);
     }
@@ -54,8 +54,8 @@ public class Estudiante extends Usuario {
      * @param investigacion
      * @param nombreSeccion
      */
-    public Estudiante(int id, long cedula, String nombre, String apellido, long telefono1,
-            int telefono2, String direccion, String email, String nombreDeUsuario,
+    public Estudiante(int id, long cedula, String nombre, String apellido, String telefono1,
+            String telefono2, String direccion, String email, String nombreDeUsuario,
             boolean activado, int tipoDeUsuario, int seccion, String fechaCreado, boolean monitoreo, boolean investigacion,String nombreSeccion) {
 
         super(id, cedula, nombre, apellido, telefono1, telefono2, direccion, email, nombreDeUsuario, activado, tipoDeUsuario, seccion, fechaCreado);
