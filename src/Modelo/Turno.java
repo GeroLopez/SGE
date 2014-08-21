@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
 import java.sql.Date;
@@ -17,16 +12,26 @@ public class Turno {
     private int id;
     private int idEstudiante;
     private int idTipoDeTurno;
-    private Date fecha;
+    private String fecha;
     private int duración;
     private String descripcion;
     private boolean estado;
+    private String realizadoPor;
 
-    public Turno(int id,int idEstudiante, int idTipoDeTurno, Date fecha) {
+    public Turno(int idEstudiante, int idTipoDeTurno, String fecha) {
+        this.idEstudiante = idEstudiante;
+        this.idTipoDeTurno = idTipoDeTurno;
+        this.fecha = fecha;
+    }
+    
+    public Turno(int id,int idEstudiante, int idTipoDeTurno, String fecha) {
         this.id = id;
         this.idEstudiante = idEstudiante;
         this.idTipoDeTurno = idTipoDeTurno;
         this.fecha = fecha;
+    }
+
+    public Turno() {
     }
 
     /**
@@ -60,14 +65,14 @@ public class Turno {
     /**
      * @return the fecha
      */
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
     /**
      * @param fecha the fecha to set
      */
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -125,6 +130,20 @@ public class Turno {
      */
     public void setIdTipoDeTurno(int idTipoDeTurno) {
         this.idTipoDeTurno = idTipoDeTurno;
+    }
+
+    /**
+     * @return the realizadoPor
+     */
+    public String getRealizadoPor() {
+        return realizadoPor;
+    }
+
+    /**
+     * @param realizadoPor the realizadoPor to set
+     */
+    public void setRealizadoPor(String realizadoPor) {
+        this.realizadoPor = realizadoPor;
     }
 
 }

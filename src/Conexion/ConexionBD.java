@@ -82,7 +82,7 @@ public class ConexionBD {
      * los datos de inicio son incorrectos.
      */
     public int login(String sql) {
-        int resultado = 0;
+        int resultado = -4;
         try {
             st = getCon().createStatement();
             setRes(st.executeQuery(sql));
@@ -91,7 +91,7 @@ public class ConexionBD {
             }
             st.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("este es el del mensaje "+e.getMessage());
         }
         return resultado;
     }

@@ -1,8 +1,9 @@
 package GUI;
 
+import Controlador.DAO_Turno;
 import Modelo.HiloReloj;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.LinkedList;
 import java.util.Locale;
 
 /**
@@ -11,7 +12,8 @@ import java.util.Locale;
  */
 public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
 
-    private HiloReloj reloj;
+    private final HiloReloj reloj;
+    public LinkedList<DAO_Turno> turnosDeHoy;
     /**
      * Creates new form RegistroEntradasInvestigacion
      */
@@ -98,8 +100,18 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
         );
 
         jButton1.setText("Iniciar Entrada");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Terminar Entrada");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -172,6 +184,16 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         reloj.setContinuar(false);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FormDatosInicioTurno ventanaDatos = new FormDatosInicioTurno(this,true,0);
+        ventanaDatos.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        FormDatosInicioTurno ventanaDatos = new FormDatosInicioTurno(this,true,1);
+        ventanaDatos.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
