@@ -2,9 +2,15 @@ package GUI;
 
 import Controlador.DAO_Turno;
 import Modelo.HiloReloj;
+import Modelo.Turno;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,7 +19,7 @@ import java.util.Locale;
 public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
 
     private final HiloReloj reloj;
-    public LinkedList<DAO_Turno> turnosDeHoy;
+
     /**
      * Creates new form RegistroEntradasInvestigacion
      */
@@ -24,10 +30,11 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
         this.setTitle("Sistema de gestión de entradas de investigación SGE");
         this.getContentPane().setBackground(java.awt.Color.white);
         this.setResizable(false);
-        reloj= new HiloReloj(jLabelReloj);
+        reloj = new HiloReloj(jLabelReloj);
         reloj.start();
         SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es"));
         jFecha.setText(formateador.format(reloj.getCalendario().getTime()).toUpperCase());
+        cargarTurnosTabla();
     }
 
     /**
@@ -46,7 +53,7 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -113,26 +120,12 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Nombre", "Hora inicio", "Hora fin", "Duración", "Descripción"
+                "Nombre", "Hora inicio", "Hora fin", "Duración (min)", "Descripción"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -143,8 +136,8 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setEnabled(false);
-        jScrollPane2.setViewportView(jTable1);
+        tabla.setEnabled(false);
+        jScrollPane2.setViewportView(tabla);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,7 +171,7 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        
+
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -186,14 +179,43 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FormDatosInicioTurno ventanaDatos = new FormDatosInicioTurno(this,true,0);
+        FormDatosInicioTurno ventanaDatos = new FormDatosInicioTurno(this, true, 0);
         ventanaDatos.setVisible(true);
+        cargarTurnosTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        FormDatosInicioTurno ventanaDatos = new FormDatosInicioTurno(this,true,1);
+        FormDatosInicioTurno ventanaDatos = new FormDatosInicioTurno(this, true, 1);
         ventanaDatos.setVisible(true);
+        cargarTurnosTabla();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void cargarTurnosTabla() {
+        DAO_Turno turno = new DAO_Turno();
+        turno.conexion.conectar();
+        turno.consultarTurnos();
+        turno.conexion.cerrarConexion();
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        int i= turno.turnos.size();
+        Object fila[][] = new Object[i][5];
+        int j = 0;
+        for (Turno turn : turno.turnos) {
+            fila[j][0] = turn.getRealizadoPor();
+            fila[j][1] = Timestamp.valueOf(turn.getFechaInicial()).getHours() + ":" + Timestamp.valueOf(turn.getFechaInicial()).getMinutes();
+            try {
+                fila[j][2] = Timestamp.valueOf(turn.getFechaFinal()).getHours() + ":" + Timestamp.valueOf(turn.getFechaFinal()).getMinutes();
+                fila[j][3] = turn.getDuración();
+                fila[j][4] = turn.getDescripcion();
+            } catch (Exception e) {
+                System.out.println(e.toString()+" es porque el turno aun esta activo");
+            }
+
+            modelo.addRow(fila);
+            j++;
+        }
+        String columnas[] = {"Nombre", "Hora Inicio", "Hora Fin", "Duración (min)", "Descripción"};
+        modelo.setDataVector(fila, columnas);
+    }
 
     /**
      * @param args the command line arguments
@@ -239,7 +261,7 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEntradas;
     private javax.swing.JLabel jLabelReloj;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private GUI.PanelBanner panelBanner1;
+    private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }

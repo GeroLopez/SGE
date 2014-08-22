@@ -1,7 +1,5 @@
 package Modelo;
 
-import java.sql.Date;
-
 /**
  *
  * @author Genaro López
@@ -12,7 +10,8 @@ public class Turno {
     private int id;
     private int idEstudiante;
     private int idTipoDeTurno;
-    private String fecha;
+    private String fechaInicial;
+    private String fechaFinal;
     private int duración;
     private String descripcion;
     private boolean estado;
@@ -21,14 +20,14 @@ public class Turno {
     public Turno(int idEstudiante, int idTipoDeTurno, String fecha) {
         this.idEstudiante = idEstudiante;
         this.idTipoDeTurno = idTipoDeTurno;
-        this.fecha = fecha;
+        this.fechaInicial = fecha;
     }
     
     public Turno(int id,int idEstudiante, int idTipoDeTurno, String fecha) {
         this.id = id;
         this.idEstudiante = idEstudiante;
         this.idTipoDeTurno = idTipoDeTurno;
-        this.fecha = fecha;
+        this.fechaInicial = fecha;
     }
 
     public Turno() {
@@ -63,17 +62,17 @@ public class Turno {
     }
 
     /**
-     * @return the fecha
+     * @return the fechaInicial
      */
-    public String getFecha() {
-        return fecha;
+    public String getFechaInicial() {
+        return fechaInicial;
     }
 
     /**
-     * @param fecha the fecha to set
+     * @param fechaInicial the fechaInicial to set
      */
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaInicial(String fechaInicial) {
+        this.fechaInicial = fechaInicial;
     }
 
     /**
@@ -144,6 +143,20 @@ public class Turno {
      */
     public void setRealizadoPor(String realizadoPor) {
         this.realizadoPor = realizadoPor;
+    }
+
+    /**
+     * @return the fechaFinal
+     */
+    public String getFechaFinal() {
+        return fechaFinal;
+    }
+
+    /**
+     * @param fechaFinal the fechaFinal to set
+     */
+    public void setFechaFinal(String fechaFinal) {
+        this.fechaFinal = fechaFinal;
     }
 
 }

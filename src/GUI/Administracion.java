@@ -46,6 +46,7 @@ public class Administracion extends javax.swing.JFrame {
         consultarEstudiante = new javax.swing.JMenuItem();
         actualizarEstudiante = new javax.swing.JMenuItem();
         desactivarEstudiante = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,18 +124,21 @@ public class Administracion extends javax.swing.JFrame {
 
         barraMenu.add(gestionarEstudiante);
 
+        jMenu1.setText("Editar Turno");
+        barraMenu.add(jMenu1);
+
         setJMenuBar(barraMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBanner1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+            .addComponent(panelBanner1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelBanner1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelBanner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 274, Short.MAX_VALUE))
         );
 
@@ -267,6 +271,7 @@ public class Administracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem consultarEstudiante;
     private javax.swing.JMenuItem desactivarEstudiante;
     private javax.swing.JMenu gestionarEstudiante;
+    private javax.swing.JMenu jMenu1;
     private GUI.PanelBanner panelBanner1;
     private javax.swing.JMenuItem salir;
     private javax.swing.JLabel titulo;

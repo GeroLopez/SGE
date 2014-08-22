@@ -62,20 +62,24 @@ public class FormDatosInicioTurno extends javax.swing.JDialog {
                 }
                 limpiarCampos(0);
             } else {
-                String descripcionTareas = areaTexto.getText();
-                turno.conexion.conectar();
-                int resultado = turno.cerrarTurno(cedula, password, descripcionTareas);
-                turno.conexion.cerrarConexion();
-                if (resultado == 0) {
-                    JOptionPane.showMessageDialog(rootPane, "Turno terminado éxitosamente", "Registro éxitoso", JOptionPane.INFORMATION_MESSAGE);
-                limpiarCampos(0);
-                
-                } else if (resultado == 1) {
-                    JOptionPane.showMessageDialog(rootPane, "No tiene un turno activo en este momento", "Error de registro", JOptionPane.ERROR_MESSAGE);
-                } else if (resultado == -1) {
-                    JOptionPane.showMessageDialog(rootPane, "Los datos de usuario no son correctos, verifiquelos e intentelo de nuevo", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                if (!areaTexto.getText().equals("")) {
+                    String descripcionTareas = areaTexto.getText();
+                    turno.conexion.conectar();
+                    int resultado = turno.cerrarTurno(cedula, password, descripcionTareas);
+                    turno.conexion.cerrarConexion();
+                    if (resultado == 0) {
+                        JOptionPane.showMessageDialog(rootPane, "Turno terminado éxitosamente", "Registro éxitoso", JOptionPane.INFORMATION_MESSAGE);
+                        limpiarCampos(0);
+
+                    } else if (resultado == 1) {
+                        JOptionPane.showMessageDialog(rootPane, "No tiene un turno activo en este momento", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                    } else if (resultado == -1) {
+                        JOptionPane.showMessageDialog(rootPane, "Los datos de usuario no son correctos, verifiquelos e intentelo de nuevo", "Error de registro", JOptionPane.ERROR_MESSAGE);
+                    }
+                    limpiarCampos(1);
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Es necesario que de una descripción de que tareas realizó en el turno", "Petición de descripción", JOptionPane.INFORMATION_MESSAGE);
                 }
-                limpiarCampos(1);
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(rootPane, "Error los datos no son correctos", "Error de registro", JOptionPane.ERROR_MESSAGE);
