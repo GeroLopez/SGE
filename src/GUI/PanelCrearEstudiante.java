@@ -345,6 +345,7 @@ public class PanelCrearEstudiante extends javax.swing.JPanel {
         });
 
         jLabelCedAct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelCedAct.setForeground(new java.awt.Color(166, 187, 63));
         jLabelCedAct.setText("Seleccione la cédula del estudiante a actualizar");
 
         jComboBoxCedulas.addItemListener(new java.awt.event.ItemListener() {

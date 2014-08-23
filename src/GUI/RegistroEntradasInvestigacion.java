@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,7 +35,7 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
         reloj.start();
         SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es"));
         jFecha.setText(formateador.format(reloj.getCalendario().getTime()).toUpperCase());
-        cargarTurnosTabla();
+        cargarTurnosTabla(false, tabla);
     }
 
     /**
@@ -136,8 +137,11 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabla.setColumnSelectionAllowed(true);
         tabla.setEnabled(false);
+        tabla.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tabla);
+        tabla.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -179,42 +183,24 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FormDatosInicioTurno ventanaDatos = new FormDatosInicioTurno(this, true, 0);
-        ventanaDatos.setVisible(true);
-        cargarTurnosTabla();
+        mostrarVentanaDatos(0);
+        cargarTurnosTabla(false, tabla);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        FormDatosInicioTurno ventanaDatos = new FormDatosInicioTurno(this, true, 1);
-        ventanaDatos.setVisible(true);
-        cargarTurnosTabla();
+        mostrarVentanaDatos(1);
+        cargarTurnosTabla(false, tabla);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public void cargarTurnosTabla() {
+    public void cargarTurnosTabla(boolean sentenciaCompleta, JTable tabla) {
         DAO_Turno turno = new DAO_Turno();
-        turno.conexion.conectar();
-        turno.consultarTurnos();
-        turno.conexion.cerrarConexion();
-        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-        int i= turno.turnos.size();
-        Object fila[][] = new Object[i][5];
-        int j = 0;
-        for (Turno turn : turno.turnos) {
-            fila[j][0] = turn.getRealizadoPor();
-            fila[j][1] = Timestamp.valueOf(turn.getFechaInicial()).getHours() + ":" + Timestamp.valueOf(turn.getFechaInicial()).getMinutes();
-            try {
-                fila[j][2] = Timestamp.valueOf(turn.getFechaFinal()).getHours() + ":" + Timestamp.valueOf(turn.getFechaFinal()).getMinutes();
-                fila[j][3] = turn.getDuración();
-                fila[j][4] = turn.getDescripcion();
-            } catch (Exception e) {
-                System.out.println(e.toString()+" es porque el turno aun esta activo");
-            }
+        turno.consultarTurnos(sentenciaCompleta);
+        turno.cargarTurnosTabla(sentenciaCompleta, tabla);
+    }
 
-            modelo.addRow(fila);
-            j++;
-        }
-        String columnas[] = {"Nombre", "Hora Inicio", "Hora Fin", "Duración (min)", "Descripción"};
-        modelo.setDataVector(fila, columnas);
+    public void mostrarVentanaDatos(int tipoVentana) {
+        FormDatosInicioTurno ventanaDatos = new FormDatosInicioTurno(this, true, tipoVentana);
+        ventanaDatos.setVisible(true);
     }
 
     /**

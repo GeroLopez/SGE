@@ -8,6 +8,7 @@ public class Administracion extends javax.swing.JFrame {
 
     PanelCrearEstudiante crearEstudiante;
     PanelConsultarEstudiante consul;
+    PanelEditarTurnos editarTurnos;
     int panelActual;
 
     /**
@@ -21,8 +22,6 @@ public class Administracion extends javax.swing.JFrame {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/recursos/icono2.png")).getImage());
         this.setTitle("Sistema de gestión de entradas de investigación SGE");
         this.getContentPane().setBackground(java.awt.Color.white);
-//        crearEstudiante = new PanelCrearEstudiante();
-//        consultarEst = new PanelConsultarEstudiante();
         panelActual = -1;
     }
 
@@ -47,6 +46,7 @@ public class Administracion extends javax.swing.JFrame {
         actualizarEstudiante = new javax.swing.JMenuItem();
         desactivarEstudiante = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        editarTurno = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,6 +125,15 @@ public class Administracion extends javax.swing.JFrame {
         barraMenu.add(gestionarEstudiante);
 
         jMenu1.setText("Editar Turno");
+
+        editarTurno.setText("Editar");
+        editarTurno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarTurnoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(editarTurno);
+
         barraMenu.add(jMenu1);
 
         setJMenuBar(barraMenu);
@@ -169,6 +178,11 @@ public class Administracion extends javax.swing.JFrame {
         titulo.setText("Activar/Desactivar Estudiante");
     }//GEN-LAST:event_desactivarEstudianteActionPerformed
 
+    private void editarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarTurnoActionPerformed
+        editarTurno();
+        titulo.setText("Editar Turnos Sin Cerrar");
+    }//GEN-LAST:event_editarTurnoActionPerformed
+
     /**
      * Crear el panel donde se despliega la función para agregar estudiantes o
      * para actualizar un estudiante dependiendo del valor del parámetro tipo.
@@ -195,7 +209,6 @@ public class Administracion extends javax.swing.JFrame {
     public void consultarEst(int tipo) {
         liberarPaneles(1);
         consul = new PanelConsultarEstudiante(tipo);
-//        this.setSize(consul.getSize().width, consul.getSize().height+60);
         consul.setBounds(0, 100, consul.getSize().width, consul.getSize().height);
         consul.setVisible(true);
         this.getContentPane().add(consul);
@@ -219,12 +232,22 @@ public class Administracion extends javax.swing.JFrame {
                     this.remove(consul);
                     break;
                 case 2:
+                    this.remove(editarTurnos);
                     break;
                 case 3:
                     break;
             }
         }
         panelActual = idPanel;
+    }
+
+    public void editarTurno() {
+        liberarPaneles(2);
+        editarTurnos = new PanelEditarTurnos();
+        editarTurnos.setBounds(5, 100, editarTurnos.getSize().width, editarTurnos.getSize().height);
+        editarTurnos.setVisible(true);
+        this.getContentPane().add(editarTurnos);
+        this.repaint();
     }
 
     /**
@@ -270,6 +293,7 @@ public class Administracion extends javax.swing.JFrame {
     private javax.swing.JMenuItem configuracion;
     private javax.swing.JMenuItem consultarEstudiante;
     private javax.swing.JMenuItem desactivarEstudiante;
+    private javax.swing.JMenuItem editarTurno;
     private javax.swing.JMenu gestionarEstudiante;
     private javax.swing.JMenu jMenu1;
     private GUI.PanelBanner panelBanner1;
