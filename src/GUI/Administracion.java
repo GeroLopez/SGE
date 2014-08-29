@@ -7,7 +7,7 @@ package GUI;
 public class Administracion extends javax.swing.JFrame {
 
     PanelCrearEstudiante crearEstudiante;
-    PanelConsultarEstudiante consul;
+    PanelConsultarEstudiante consultarEstudiantes;
     PanelEditarTurnos editarTurnos;
     int panelActual;
 
@@ -200,18 +200,19 @@ public class Administracion extends javax.swing.JFrame {
     }
 
     /**
-     * Crear el panel donde se despliega la función para consultar estudiantes o
-     * para desactivar un estudiante dependiendo del valor del parámetro tipo.
+     * Crear el panel donde se despliega la función para consultarEstudiantestar
+     * estudiantes o para desactivar un estudiante dependiendo del valor del
+     * parámetro tipo.
      *
-     * @param tipo tipo de función a realizar 0 para consultar un estudiante 1
-     * para desactivar un estudiante.
+     * @param tipo tipo de función a realizar 0 para consultarEstudiantestar un
+     * estudiante 1 para desactivar un estudiante.
      */
     public void consultarEst(int tipo) {
         liberarPaneles(1);
-        consul = new PanelConsultarEstudiante(tipo);
-        consul.setBounds(0, 100, consul.getSize().width, consul.getSize().height);
-        consul.setVisible(true);
-        this.getContentPane().add(consul);
+        consultarEstudiantes = new PanelConsultarEstudiante(tipo);
+        consultarEstudiantes.setBounds(0, 100, consultarEstudiantes.getSize().width, consultarEstudiantes.getSize().height);
+        consultarEstudiantes.setVisible(true);
+        this.getContentPane().add(consultarEstudiantes);
         this.repaint();
     }
 
@@ -229,7 +230,7 @@ public class Administracion extends javax.swing.JFrame {
                     this.remove(crearEstudiante);
                     break;
                 case 1:
-                    this.remove(consul);
+                    this.remove(consultarEstudiantes);
                     break;
                 case 2:
                     this.remove(editarTurnos);
@@ -241,6 +242,9 @@ public class Administracion extends javax.swing.JFrame {
         panelActual = idPanel;
     }
 
+    /**
+     * Crea el panel donde se gestiona la edición de turnos y lo muestra en pantalla.
+     */
     public void editarTurno() {
         liberarPaneles(2);
         editarTurnos = new PanelEditarTurnos();

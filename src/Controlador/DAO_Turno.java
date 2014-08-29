@@ -145,19 +145,21 @@ public class DAO_Turno extends Turno {
             fila[j][0] = turn.getRealizadoPor();
             if (fechaCompleta) {
                 fila[j][1] = turn.getFechaInicial();
+                
             } else {
                 fila[j][1] = Timestamp.valueOf(turn.getFechaInicial()).getHours() + ":" + Timestamp.valueOf(turn.getFechaInicial()).getMinutes();
-            }
-            try {
+                if(turn.getFechaFinal()!=null){
                 fila[j][2] = Timestamp.valueOf(turn.getFechaFinal()).getHours() + ":" + Timestamp.valueOf(turn.getFechaFinal()).getMinutes();
+                }
+                }
+            try {
+
                 fila[j][3] = turn.getDuración();
                 fila[j][4] = turn.getDescripcion();
             } catch (Exception e) {
                 System.out.println(e.toString() + " es porque el turno aun esta activo");
             }
-
             modelo.addRow(fila);
-            System.out.println(modelo.isCellEditable(j, 4));
             j++;
         }
         String columnas[] = {"Nombre", "Hora Inicio", "Hora Fin", "Duración (min)", "Descripción"};
