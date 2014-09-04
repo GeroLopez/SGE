@@ -74,7 +74,7 @@ public class DAO_Turno extends Turno {
      * incompletos en caso de ser true.
      *
      * @return Mensaje indicando si la consulta se realizó exitosamento o no.
-     */
+     *///EXTRACT(DAY from t.fecha_inicio) > EXTRACT (DAY from 'yesterday'::timestamp with time zone) "
     public String consultarTurnos(boolean sentenciaCompleta) {
         conexion.conectar();
         String respuesta = "exito";
@@ -83,13 +83,13 @@ public class DAO_Turno extends Turno {
         if (sentenciaCompleta) {
             modificadorConsulta = "and descripcion='' and t.estado = false ";
         } else {
-            modificadorConsulta2 = " and EXTRACT(DAY from t.fecha_inicio) > EXTRACT (DAY from 'yesterday'::timestamp with time zone) ";
+            modificadorConsulta2 = " and t.fecha_inicio > 'yesterday'::timestamp with time zone";
         }
         turnos = new LinkedList<Turno>();
         String sql = "select u.first_name, u.last_name, t.fecha_inicio,t.duracion,"
                 + "t.descripcion, t.id, t.tipo, u.id from users as u inner join turno as t "
                 + "on u.id = t.estudiante "
-                + modificadorConsulta2 + " and t.tipo=1 " + modificadorConsulta + " order by t.fecha_inicio";
+                + modificadorConsulta + " and t.tipo=1 " + modificadorConsulta2 + " order by t.fecha_inicio";
         try {
             conexion.consultar(sql);
             while (conexion.getRes().next()) {

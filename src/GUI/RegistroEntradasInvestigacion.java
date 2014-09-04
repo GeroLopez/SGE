@@ -51,10 +51,11 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
         jLabelReloj = new javax.swing.JLabel();
         jLabelEntradas = new javax.swing.JLabel();
         jFecha = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        iniciarEntrada = new javax.swing.JButton();
+        terminarEntrada = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        cerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -88,7 +89,7 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
             .addGroup(panelBanner1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabelEntradas)
-                .addGap(117, 117, 117)
+                .addGap(79, 79, 79)
                 .addGroup(panelBanner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelReloj)
                     .addComponent(jFecha))
@@ -99,25 +100,24 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBanner1Layout.createSequentialGroup()
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(panelBanner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBanner1Layout.createSequentialGroup()
-                        .addComponent(jLabelReloj, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFecha))
+                    .addComponent(jLabelReloj, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelEntradas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jFecha)
                 .addContainerGap())
         );
 
-        jButton1.setText("Iniciar Entrada");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        iniciarEntrada.setText("Iniciar Entrada");
+        iniciarEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                iniciarEntradaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Terminar Entrada");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        terminarEntrada.setText("Terminar Entrada");
+        terminarEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                terminarEntradaActionPerformed(evt);
             }
         });
 
@@ -143,20 +143,32 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tabla);
         tabla.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
+        cerrar.setText("Cerrar");
+        cerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelBanner1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(iniciarEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
-                .addContainerGap())
+                        .addComponent(terminarEntrada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cerrar)
+                        .addGap(19, 19, 19))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,8 +178,9 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(iniciarEntrada)
+                    .addComponent(terminarEntrada)
+                    .addComponent(cerrar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -182,15 +195,20 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
         reloj.setContinuar(false);
     }//GEN-LAST:event_formWindowClosing
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void iniciarEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarEntradaActionPerformed
         mostrarVentanaDatos(0);
         cargarTurnosTabla(false, tabla);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_iniciarEntradaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void terminarEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terminarEntradaActionPerformed
         mostrarVentanaDatos(1);
         cargarTurnosTabla(false, tabla);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_terminarEntradaActionPerformed
+
+    private void cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarActionPerformed
+        reloj.setContinuar(false);
+        System.exit(0);
+    }//GEN-LAST:event_cerrarActionPerformed
 
     public void cargarTurnosTabla(boolean sentenciaCompleta, JTable tabla) {
         DAO_Turno turno = new DAO_Turno();
@@ -241,13 +259,14 @@ public class RegistroEntradasInvestigacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton cerrar;
+    private javax.swing.JButton iniciarEntrada;
     private javax.swing.JLabel jFecha;
     private javax.swing.JLabel jLabelEntradas;
     private javax.swing.JLabel jLabelReloj;
     private javax.swing.JScrollPane jScrollPane2;
     private GUI.PanelBanner panelBanner1;
     private javax.swing.JTable tabla;
+    private javax.swing.JButton terminarEntrada;
     // End of variables declaration//GEN-END:variables
 }
