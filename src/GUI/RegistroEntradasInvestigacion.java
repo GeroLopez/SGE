@@ -2,16 +2,9 @@ package GUI;
 
 import Controlador.DAO_Turno;
 import Modelo.HiloReloj;
-import Modelo.Turno;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.LinkedList;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *

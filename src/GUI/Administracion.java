@@ -10,6 +10,7 @@ public class Administracion extends javax.swing.JFrame {
     PanelConsultarEstudiante consultarEstudiantes;
     PanelEditarTurnos editarTurnos;
     int panelActual;
+    String diaCierre;
 
     /**
      * Creates new form Administracion

@@ -2,10 +2,12 @@ package Controlador;
 
 import Conexion.ConexionBD;
 import Modelo.Turno;
+import com.sun.rowset.CachedRowSetImpl;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.LinkedList;
+import javax.sql.rowset.CachedRowSet;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -145,13 +147,13 @@ public class DAO_Turno extends Turno {
             fila[j][0] = turn.getRealizadoPor();
             if (fechaCompleta) {
                 fila[j][1] = turn.getFechaInicial();
-                
+
             } else {
                 fila[j][1] = Timestamp.valueOf(turn.getFechaInicial()).getHours() + ":" + Timestamp.valueOf(turn.getFechaInicial()).getMinutes();
-                if(turn.getFechaFinal()!=null){
-                fila[j][2] = Timestamp.valueOf(turn.getFechaFinal()).getHours() + ":" + Timestamp.valueOf(turn.getFechaFinal()).getMinutes();
+                if (turn.getFechaFinal() != null) {
+                    fila[j][2] = Timestamp.valueOf(turn.getFechaFinal()).getHours() + ":" + Timestamp.valueOf(turn.getFechaFinal()).getMinutes();
                 }
-                }
+            }
             try {
 
                 fila[j][3] = turn.getDuración();
@@ -166,6 +168,9 @@ public class DAO_Turno extends Turno {
         modelo.setDataVector(fila, columnas);
     }
 
+    /**
+     * Actualiza los registros de la tabla turno.
+     */
     public void actualizarTurnosBD() {
         conexion.conectar();
         for (Turno turno : turnos) {
@@ -176,5 +181,40 @@ public class DAO_Turno extends Turno {
             }
         }
         conexion.cerrarConexion();
+    }
+
+    public void cargarTablaPagosInv(String fechaI, String fechaF, JTable tabla) {
+        String sql = "select * from obtenerminutospagar('" + fechaI + "','" + fechaF + "')";
+        conexion.conectar();
+        conexion.consultar(sql);
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        Object datos[] = new Object[6]; //Numero de columnas de la tabla
+        try {
+            CachedRowSet crs = new CachedRowSetImpl();
+            crs.populate(conexion.getRes());
+            while (crs.next()) {
+                for (int i = 0; i < 3; i++) {
+                    Object ob = crs.getObject(i + 1);
+                    try {
+                        datos[i] = ob;
+                        System.out.println(datos[i].toString());
+                    } catch (Exception e1) {
+                        datos[i] = 0;
+                        System.out.println(e1.toString()+" "+datos[i]);
+                    }
+                }
+                datos[3] = 0;
+                datos[4] = 0;
+                datos[5]=0;
+                datos[6] = Integer.valueOf(datos[2].toString()) - Integer.valueOf(datos[1].toString()) 
+                        + Integer.valueOf(datos[3].toString()) - Integer.valueOf(datos[4].toString());
+                modelo.addRow(datos);
+            }
+            crs.close();
+            conexion.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
     }
 }

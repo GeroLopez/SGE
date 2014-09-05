@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI;
+
+import Controlador.DAO_Turno;
+import javax.swing.JTable;
 
 /**
  *
@@ -12,12 +14,29 @@ package GUI;
  */
 public class FormControlHorasInv extends javax.swing.JDialog {
 
+    public static String fechai;
+    public static String fechaf;
+
     /**
      * Creates new form FormControlHorasInv
+     *
+     * @param parent
+     * @param modal
+     * @param fechai
+     * @param fechaf
      */
-    public FormControlHorasInv(java.awt.Frame parent, boolean modal) {
+    public FormControlHorasInv(java.awt.Frame parent, boolean modal, String fechai, String fechaf) {
         super(parent, modal);
         initComponents();
+        this.fechai = fechai;
+        this.fechaf = fechaf;
+        System.out.println(""+91/60);
+        //cargarTurnosTabla(fechai, fechaf, tabla);
+    }
+
+    public void cargarTurnosTabla(String fechaI, String fechaF, JTable tabla) {
+        DAO_Turno turno = new DAO_Turno();
+        turno.cargarTablaPagosInv(fechaI, fechaF, tabla);
     }
 
     /**
@@ -29,17 +48,45 @@ public class FormControlHorasInv extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Horas que debe Inv", "Horas  Inv del mes", "Horas para adelantar Inv", "Horas para otro pago Inv", "Horas Inv Totales", "Valor Investigación", "Horas Monitoreo", "Valor Monitoreo", "Valor Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabla.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -75,7 +122,7 @@ public class FormControlHorasInv extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FormControlHorasInv dialog = new FormControlHorasInv(new javax.swing.JFrame(), true);
+                FormControlHorasInv dialog = new FormControlHorasInv(new javax.swing.JFrame(), true, fechai, fechaf);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -88,5 +135,7 @@ public class FormControlHorasInv extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }
